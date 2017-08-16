@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/Hailubby/761_ChatBot/issues"
   },
-  "homepage": "https://github.com/Hailubby/761_ChatBot#readme"
+  "homepage": "https://github.com/Hailubby/761_ChatBot#readme",
+  "dependencies": {
+    "express": "^4.15.4",
+    "firebase": "^4.2.0",
+    "firebase-functions": "^0.6.1"
+  }
 }

@@ -1,1 +1,5 @@
-{}
+{
+  "projects": {
+    "default": "spgetti-bot-cae4a"
+  }
+}
