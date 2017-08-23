@@ -7,7 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const path = require('path');
-var messengerButton = "<html><head><title>Facebook Messenger Bot</title></head><body><h1>Facebook Messenger Bot</h1>This is a bot based on Messenger Platform QuickStart. For more details, see their <a href=\"https://developers.facebook.com/docs/messenger-platform/guides/quick-start\">docs</a>.<script src=\"https://button.glitch.me/button.js\" data-style=\"glitch\"></script><div class=\"glitchButton\" style=\"position:fixed;top:20px;right:20px;\"></div></body></html>";
+var messengerButton = '<html><head><title>Facebook Messenger Bot</title></head><body><h1>Facebook Messenger Bot</h1>This is a bot based on Messenger Platform QuickStart. For more details, see their <a href=\'https://developers.facebook.com/docs/messenger-platform/guides/quick-start\'>docs</a>.<script src=\'https://button.glitch.me/button.js\' data-style=\'glitch\'></script><div class=\'glitchButton\' style=\'position:fixed;top:20px;right:20px;\'></div></body></html>';
 
 // The rest of the code implements the routes for our Express server.
 let app = express();
@@ -21,10 +21,10 @@ app.use(bodyParser.urlencoded({
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === config.VERIFY_TOKEN) {
-    console.log("Validating webhook");
+    console.log('Validating webhook');
     res.status(200).send(req.query['hub.challenge']);
   } else {
-    console.error("Failed validation. Make sure the validation tokens match.");
+    console.error('Failed validation. Make sure the validation tokens match.');
     res.sendStatus(403);
   }
 });
@@ -56,7 +56,7 @@ app.post('/webhook', function (req, res) {
         } else if (event.postback) {
           receivedPostback(event);
         } else {
-          console.log("Webhook received unknown event: ", event);
+          console.log('Webhook received unknown event: ', event);
         }
       });
     });
@@ -77,7 +77,7 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("Received message for user %d and page %d at %d with message:",
+  console.log('Received message for user %d and page %d at %d with message:',
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
@@ -93,12 +93,15 @@ function receivedMessage(event) {
       case 'generic':
         sendGenericMessage(senderID);
         break;
+      case 'ping':
+        sendTextMessage(senderID,'pong');
+        break;
 
       default:
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
+    sendTextMessage(senderID, 'Message with attachment received');
   }
 }
 
@@ -111,12 +114,12 @@ function receivedPostback(event) {
   // button for Structured Messages.
   var payload = event.postback.payload;
 
-  console.log("Received postback for user %d and page %d with payload '%s' " +
-    "at %d", senderID, recipientID, payload, timeOfPostback);
+  console.log('Received postback for user %d and page %d with payload "%s" ' +
+    'at %d', senderID, recipientID, payload, timeOfPostback);
 
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  sendTextMessage(senderID, 'Postback called');
 }
 
 //////////////////////////
@@ -142,36 +145,36 @@ function sendGenericMessage(recipientId) {
     },
     message: {
       attachment: {
-        type: "template",
+        type: 'template',
         payload: {
-          template_type: "generic",
+          template_type: 'generic',
           elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",
-            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+            title: 'rift',
+            subtitle: 'Next-generation virtual reality',
+            item_url: 'https://www.oculus.com/en-us/rift/',
+            image_url: 'http://messengerdemo.parseapp.com/img/rift.png',
             buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
-              title: "Open Web URL"
+              type: 'web_url',
+              url: 'https://www.oculus.com/en-us/rift/',
+              title: 'Open Web URL'
             }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble",
+              type: 'postback',
+              title: 'Call Postback',
+              payload: 'Payload for first bubble',
             }],
           }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",
-            image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+            title: 'touch',
+            subtitle: 'Your Hands, Now in VR',
+            item_url: 'https://www.oculus.com/en-us/touch/',
+            image_url: 'http://messengerdemo.parseapp.com/img/touch.png',
             buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
+              type: 'web_url',
+              url: 'https://www.oculus.com/en-us/touch/',
+              title: 'Open Web URL'
             }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for second bubble",
+              type: 'postback',
+              title: 'Call Postback',
+              payload: 'Payload for second bubble',
             }]
           }]
         }
@@ -194,10 +197,10 @@ function callSendAPI(messageData) {
       var recipientId = body.recipient_id;
       var messageId = body.message_id;
 
-      console.log("Successfully sent generic message with id %s to recipient %s",
+      console.log('Successfully sent generic message with id %s to recipient %s',
         messageId, recipientId);
     } else {
-      console.error("Unable to send message.");
+      console.error('Unable to send message.');
       console.error(response);
       console.error(error);
     }
@@ -206,5 +209,5 @@ function callSendAPI(messageData) {
 
 // Set Express to listen out for HTTP requests
 var server = app.listen(config.PORT || 3000, function () {
-  console.log("Listening on port %s", server.address().port);
+  console.log('Listening on port %s', server.address().port);
 });
