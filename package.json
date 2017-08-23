@@ -2,9 +2,9 @@
   "name": "761_chatbot",
   "version": "1.0.0",
   "description": "A wellness chatbot for gambler addicts",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/bot.js"
   },
   "repository": {
     "type": "git",
@@ -18,14 +18,14 @@
     "addiction"
   ],
   "author": "Agilé Solutions Limmited",
-  "license": "LGPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Hailubby/761_ChatBot/issues"
   },
   "homepage": "https://github.com/Hailubby/761_ChatBot#readme",
   "dependencies": {
-    "express": "^4.15.4",
-    "firebase": "^4.2.0",
-    "firebase-functions": "^0.6.1"
+    "request": "^2.72.0",
+    "express": "*",
+    "body-parser": "*"
   }
 }
