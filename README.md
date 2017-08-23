@@ -31,3 +31,7 @@ Required:
 - ESLint extension
 - EditorConfig extension (or Mirror the settings in _.editorconfig_)
 - Node.js
+
+## Glitch setup
+
+1. 
