@@ -1,4 +1,5 @@
-'use strict';
+const request = require('request');
+
 class message {
   constructor(
     senderId,
@@ -15,16 +16,16 @@ class message {
   }
 
   sendMessage(messageText) {
-    var messageData = {
+    let messageData = {
       recipient: {
-        id: recipientId
+        id: this.senderId
       },
       message: {
         text: messageText
       }
     };
 
-    callSendAPI(messageData);
+    this.callSendAPI(messageData);
   }
 
   callSendAPI(messageData) {
@@ -36,8 +37,8 @@ class message {
 
     }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        var recipientId = body.recipient_id;
-        var messageId = body.message_id;
+        let recipientId = body.recipient_id;
+        let messageId = body.message_id;
 
         console.log('Successfully sent generic message with id %s to recipient %s',
           messageId, recipientId);

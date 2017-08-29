@@ -1,6 +1,6 @@
 const FBClient = require('./fbclient.js');
 const request = require('request');
-const client = new FBClient(config.VERIFY_TOKEN, config.PAGE_ACCESS_TOKEN);
+const client = new FBClient();
 
 client.onMessage(message => {
   if (message.text === 'ping') {
