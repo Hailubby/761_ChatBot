@@ -34,4 +34,7 @@ Required:
 
 ## Glitch setup
 
-1. 
+1. Create a glitch project to host the chatbot
+2. Click on the project title and browse to advanced options
+3. Import the bot from the GitHub repository
+4. The bot should now automatically be hosted and running
