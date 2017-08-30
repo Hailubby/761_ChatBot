@@ -1,6 +1,6 @@
 const request = require('request');
 
-class message {
+class Message {
   constructor(
     senderId,
     timestamp,
@@ -90,4 +90,4 @@ class message {
   }
 }
 
-module.exports = message;
+module.exports = Message;

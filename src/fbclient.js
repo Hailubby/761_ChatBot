@@ -13,9 +13,8 @@ class FBClient {
     }));
   }
 
-  onMessage(callback) {
+  onMessage(callback, caller) {
     this.app.post('/webhook', (req,res) => {
-       console.log(req.body);
       var data = req.body;
 
       // Make sure this is a page subscription
@@ -29,7 +28,7 @@ class FBClient {
           // Iterate over each messaging event
           entry.messaging.forEach(function(event) {
             if (event.message) {
-              receivedMessage(event, callback);
+              receivedMessage(event, callback, caller);
             } else if (event.postback) {
               receivedPostback(event);
             } else {
@@ -62,7 +61,6 @@ class FBClient {
   }
 
   postCallback (req, res) {
-      console.log(req.body);
       var data = req.body;
 
       // Make sure this is a page subscription
@@ -76,7 +74,7 @@ class FBClient {
           // Iterate over each messaging event
           entry.messaging.forEach(function(event) {
             if (event.message) {
-              receivedMessage(event, this.callback);
+              receivedMessage(event, callback);
             } else if (event.postback) {
               receivedPostback(event);
             } else {
@@ -105,31 +103,28 @@ class FBClient {
 module.exports = FBClient;
 
 
-function receivedMessage(event, callback) {
-    let senderID = event.sender.id;
-    let recipientID = event.recipient.id;
-    let timeOfMessage = event.timestamp;
-    let message = event.message;
+function receivedMessage(event, callback, caller) {
+  console.log(event);
 
-    console.log('Received message for user %d and page %d at %d with message:',
-      senderID, recipientID, timeOfMessage);
-    console.log(JSON.stringify(message));
-    console.log('Event: ', event);
+  let senderID = event.sender.id;
+  let recipientID = event.recipient.id;
+  let timeOfMessage = event.timestamp;
+  let message = event.message;
 
-    let messageId = message.mid;
+  let messageId = message.mid;
 
-    let messageText = message.text;
-    let messageAttachments = message.attachments;
+  let messageText = message.text;
+  let messageAttachments = message.attachments;
 
-    let msg = new Message(
-      senderID,
-      timeOfMessage,
-      messageText,
-      messageAttachments,
-      config.PAGE_ACCESS_TOKEN
-    );
+  let msg = new Message(
+    senderID,
+    timeOfMessage,
+    messageText,
+    messageAttachments,
+    config.PAGE_ACCESS_TOKEN
+  );
 
-    callback(msg);
+  callback.call(caller, msg);
 
     // if (messageText) {
     //   // If we receive a text message, check to see if it matches a keyword
