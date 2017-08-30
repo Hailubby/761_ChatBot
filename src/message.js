@@ -50,15 +50,9 @@ class Message {
     });
   }
 
-  sendGenericMessage(messageArray) {
-    this.title = messageArray[0];
-    this.subtitle = messageArray[1];
+  sendGenericMessage(GMessage) {
 
-    this.constructGenericMessage(messageArray[2]);
-  }
-
-  constructGenericMessage(buttonsArray) {
-    let messageData = {
+    this.messageData = {
       recipient: {
         id: this.senderId
       },
@@ -67,17 +61,28 @@ class Message {
           type: 'template',
           payload: {
             template_type: 'generic',
-            elements: [{
-              title: this.title,
-              subtitle: this.subtitle,
-              buttons: [],
-            }]
+            elements: []
           }
         }
       }
     };
 
-    let button = messageData.message.attachment.payload.elements[0].buttons;
+    for (let i = 0; i < GMessage.length; i++) {
+      this.constructGenericMessage(i, GMessage[i]);
+    }
+
+    this.callSendAPI(this.messageData);
+  }
+
+  constructGenericMessage(index, GMessage) {
+    let elements = this.messageData.message.attachment.payload.elements;
+    let element = {};
+    element.title = GMessage.title;
+    element.subtitle = GMessage.subtitle;
+    let button = element.buttons;
+    button = [];
+    let buttonsArray = GMessage.buttons;
+    let thumbnail = GMessage.thumbnail;
 
     for (let i = 0; i < buttonsArray.length; i++) {
       button[i] = {};
@@ -86,7 +91,14 @@ class Message {
       button[i].title = (buttonsArray[i])[0];
     }
 
-    this.callSendAPI(messageData);
+    if (!(thumbnail === undefined)) {
+        element.image_url = thumbnail[0];
+        if (thumbnail.length === 2) {
+          element.item_url = thumbnail[1];
+        }
+    }
+
+    elements.push(element);
   }
 }
 
