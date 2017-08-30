@@ -49,6 +49,45 @@ class Message {
       }
     });
   }
+
+  sendGenericMessage(messageArray) {
+    this.title = messageArray[0];
+    this.subtitle = messageArray[1];
+
+    this.constructGenericMessage(messageArray[2]);
+  }
+
+  constructGenericMessage(buttonsArray) {
+    let messageData = {
+      recipient: {
+        id: this.senderId
+      },
+      message: {
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'generic',
+            elements: [{
+              title: this.title,
+              subtitle: this.subtitle,
+              buttons: [],
+            }]
+          }
+        }
+      }
+    };
+
+    let button = messageData.message.attachment.payload.elements[0].buttons;
+
+    for (let i = 0; i < buttonsArray.length; i++) {
+      button[i] = {};
+      button[i].type = 'web_url';
+      button[i].url = (buttonsArray[i])[1];
+      button[i].title = (buttonsArray[i])[0];
+    }
+
+    this.callSendAPI(messageData);
+  }
 }
 
 module.exports = Message;
