@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "indigo-griffin-161602",
+  "private_key_id": "7c44facc2c8042d6c2b773d407343ba560b9db78",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQC4Bx6rlpNMHRZl\nunDqSkS1gm4620wUHZvZ0r4VNunzpIjAgjX6kGsWXuSXXxF40StHsz10hpo21wzJ\nnPNmEnHV9mMbuNzLHWaufu6BMmqe18XhkEH/T00eSbX9EOQ+QpBkQdfyPvMQZeDx\nM78MQb48slfoIHJ94058ylWlAiDJC1be6KIEMKS2EVl5SCpvIF5NOuO7uQd/d7DV\nj7EnaywX3JvhPuxNnPshgFV2P9Umhf2OSfe+hwEfjs3KwICO8t4dfx9kUqG15VGi\nXjjxRMt9fu3oZNxHSqEcAR08wcMEhdHDCzFAx4VmZrwtAArCmgg+eMjZnY9Uth2S\n2dQ/07UtAgMBAAECgf9U7o3fiau+Tq5hKzek6bt/cD+8Nvm/Tur4dnEqP7qgEVxy\nST+58TnhjGoNP0ZEPEUW3xWKpS46bewfU6oB5QFX5LhY7J76HwrRl3aVdtWkxnDN\nNlOlp5ov7SHQ0FSGmrHvk3PWmYOuGooP+ytxIxmcnOXbrx304hnKZJdvHRkeFeIZ\naTawCg5eAvz++fBpBKM1wP1Etmvfko7sKpZZvKInj0o6+RYM7L/Tc8Iub3Ue4QOw\nxxTSwL1DjcuiIofF8Ka2CX+5i4Ej4c2RjxrN7QeHGPNuXiWXJfUVce40kshO98Fe\nkV4NWr6r8zl56bgtrr1bPrGV/NhgUeTvmKY92mkCgYEA2zjvzl2x0MIfOA/VXFlU\nyvGJENkYM6jjDKgPSwqNN63hiykRpBZz3dwbnVkwc57q0sOL6ZQ60pOWSVNsEUiU\nj2gyz167yKjAqJ2IyoHAPWd6tmref2+ZaCk4Dhh7wUTIXlSc4cxNgd+d2RStMRK7\nuwiaptW6t5ntsD9OQuepGhUCgYEA1uapY07YOCaAJfIHlXQ/027H0VH+j53TTMK8\ngSkOhkELU+jmgJusa0WbWsNDFOwsC8PvMV9qtKGnIuHeGeNN5UtC+VOa5rvreSHz\nSCnmM53rx2h3kXn90kiw+jtXQj+vcgz8Xly0FsD4/zSgbc1U5CXCSj/x8URWhUGU\n6qPjbLkCgYBFzcduKp9oHafbLg9+LGO3i1ldqALw0CIb8ZeNCXsV86QRr64SVaPn\nTSLt42xuJHgZTHLMmYpxatU72/hZOIc1crRbG4snxbQy/JaGBPK1mrGUTEs0wNBU\nPmu+8UTWsZQrlT2vGGLFq/KTIOZU7eYhFAhKf1vJApaQvFerLiDGUQKBgDTWzjte\nvYdA4C10Ty0OQktIZ9Ut5fuGANhU4WiYobuc7p4ZG+PvYvuVR9ePP0U7tLDH4l4v\nads0DBZlluiinRqN4M/RILsu5X0JPfo2YyW55KlJJG0eo6w6t1kvkgr2Abt3Oe4x\nuQ4HMLH/TJry67aVGiqLgn+iH+vv7h+rYFXxAoGBAKb0ppJII/yPTGh1ByO3atx1\nyY+aQ3FIcfRfUHHff62FbgqH7smtBii4/QQd2xLkUgwJZ7mV6qaBdhV0ewgSZzBs\n8Y98TlcYWNnEH4zfbHAF9YKlRg8Ow+lfgkPeus8/xz5txR7nysRE9qWRmpaLJy5h\nWN8zUnvHbdnSNBEj/ZOS\n-----END PRIVATE KEY-----\n",
+  "client_email": "spgetti@indigo-griffin-161602.iam.gserviceaccount.com",
+  "client_id": "111353558277222480869",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/spgetti%40indigo-griffin-161602.iam.gserviceaccount.com"
+}

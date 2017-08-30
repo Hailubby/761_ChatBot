@@ -2,6 +2,7 @@ const FBClient = require('./fbclient.js');
 const Message = require('./message.js');
 const Command = require('./command.js');
 const Client = new FBClient();
+const log = require('./log.js');
 
 class Bot{
   constructor(){
@@ -21,6 +22,7 @@ class Bot{
     Client.onMessage(message => {
       // If there is an existing object in the dictionary then go through the array
       // of commands that this user can do.
+      log(message.senderID, message.text);
       let responded = false;
       if (this.userFollowups[message.senderID]){
         this.userFollowups[message.senderID].every(command => {
