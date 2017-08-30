@@ -2,17 +2,17 @@ class Command {
   /**
    * Command objects encapsulate a conversation between the bot and a single user.
    *
-   * @param {string} key
+   * @param {RegExp} key
    * @param {function} respond
    * @param {Command[]} followup
    */
   constructor(key="", respond=(msg) => {}, followup = []){
     // name of key
-    this.key;
+    this.key = key;
     // Response this convo gives
-    this.respond;
+    this.respond = respond;
     // follow up convos
-    this.followup;
+    this.followup = followup;
   }
 }
 

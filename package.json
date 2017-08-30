@@ -4,7 +4,7 @@
   "description": "A wellness chatbot for gambler addicts",
   "main": "index.js",
   "scripts": {
-    "start": "node src/bot.js"
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,8 @@
     "request": "^2.72.0",
     "express": "*",
     "body-parser": "*"
+  },
+  "devDependencies": {
+    "eslint": "^4.5.0"
   }
 }
