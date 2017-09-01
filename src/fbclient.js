@@ -104,7 +104,7 @@ module.exports = FBClient;
 
 
 function receivedMessage(event, callback, caller) {
-  console.log(event);
+  // console.log(event);
 
   let senderID = event.sender.id;
   let recipientID = event.recipient.id;
