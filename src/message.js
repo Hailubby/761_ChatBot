@@ -71,24 +71,28 @@ class Message {
       this.constructGenericMessage(i, GMessage[i]);
     }
 
+    console.log(this.messageData.message.attachment.payload);
     this.callSendAPI(this.messageData);
   }
 
   constructGenericMessage(index, GMessage) {
+
     let elements = this.messageData.message.attachment.payload.elements;
+
     let element = {};
     element.title = GMessage.title;
     element.subtitle = GMessage.subtitle;
-    let button = element.buttons;
-    button = [];
+    element.buttons = [];
+
     let buttonsArray = GMessage.buttons;
     let thumbnail = GMessage.thumbnail;
 
     for (let i = 0; i < buttonsArray.length; i++) {
-      button[i] = {};
-      button[i].type = 'web_url';
-      button[i].url = (buttonsArray[i])[1];
-      button[i].title = (buttonsArray[i])[0];
+      let btn = {};
+      btn.type = 'web_url';
+      btn.url = (buttonsArray[i])[1];
+      btn.title = (buttonsArray[i])[0];
+      element.buttons.push(btn);
     }
 
     if (!(thumbnail === undefined)) {
@@ -97,7 +101,6 @@ class Message {
           element.item_url = thumbnail[1];
         }
     }
-
     elements.push(element);
   }
 }
