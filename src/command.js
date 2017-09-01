@@ -6,7 +6,7 @@ class Command {
    * @param {function} respond
    * @param {Command[]} followup
    */
-  constructor(key="", respond=(msg) => {}, followup = []){
+  constructor(key, respond=(msg) => {}, followup = []){
     // name of key
     this.key = key;
     // Response this convo gives
