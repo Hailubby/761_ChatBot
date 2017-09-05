@@ -2,6 +2,8 @@ const FBClient = require('./fbclient.js');
 const Message = require('./message.js');
 const Command = require('./command.js');
 const Client = new FBClient();
+const NLP = require('./nlp.js');
+
 
 class Bot{
   constructor(){
@@ -21,28 +23,15 @@ class Bot{
     Client.onMessage(message => {
       // If there is an existing object in the dictionary then go through the array
       // of commands that this user can do.
+
+      let nlp = new NLP();
+
       let responded = false;
       if (this.userFollowups[message.senderID]){
-        this.userFollowups[message.senderID].every(command => {
-          if (command.key.test(message.text)){
-            command.respond(message);
-            this.userFollowups[message.senderID] = command.followup;
-            responded = true;
-            return false;
-          }
-          return true;
-        });
+          responded = nlp.processMessage(this.userFollowups[message.senderID],this.userFollowups,message);
       }
-
       if (!responded){
-        this.commands.every(command => {
-          if (command.key.test(message.text)){
-            command.respond(message);
-            this.userFollowups[message.senderID] = command.followup;
-            return false;
-          }
-          return true;
-        });
+         nlp.processMessage(this.commands,this.userFollowups,message);
       }
     }, this);
     Client.listen();

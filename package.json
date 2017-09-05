@@ -24,9 +24,10 @@
   },
   "homepage": "https://github.com/Hailubby/761_ChatBot#readme",
   "dependencies": {
-    "request": "^2.72.0",
+    "body-parser": "*",
     "express": "*",
-    "body-parser": "*"
+    "natural": "^0.5.4",
+    "request": "^2.72.0"
   },
   "devDependencies": {
     "eslint": "^4.5.0"
