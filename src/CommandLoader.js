@@ -1,18 +1,11 @@
 const Command = require('./command');
-const ExcelConverter = require('./util/ExcelConverter');
 const config = require('../config.json');
 
 /**
  * Loads sets of commands
  */
 class CommandLoader {
-  constructor() {
-    const converter = new ExcelConverter();
-    if (this.shouldLoad('CONVERSATION')) {
-      this.conversationJSON = converter.convert('CONVERSATION');
-      this.followUpJSON = converter.convert('FOLLOWUP');
-    }
-  }
+  constructor() {}
 
   shouldLoad(module) {
     return config.LOAD_MODULES.includes(module);
@@ -26,6 +19,9 @@ class CommandLoader {
   load() {
     let commands = [];
     if (this.shouldLoad('CONVERSATION')) {
+      this.conversationJSON = require('../resources/conversation.json');
+      this.followUpJSON = require('../resources/followup.json');
+
       for (let i = 0; i < this.conversationJSON.length; i++) {
         commands.push(this.getCommand(i, this.conversationJSON));
       }
@@ -79,7 +75,7 @@ class CommandLoader {
    * @param {string} responseMsg
    */
   makeStringFunction(responseMsg) {
-    const instructions = `msg.sendMessage('${responseMsg}');`;
+    const instructions = `msg.sendMessage("${responseMsg}");`;
     const func = new Function('msg', instructions);
 
     return (func);

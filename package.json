@@ -4,7 +4,8 @@
   "description": "A wellness chatbot for gambler addicts",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "build": "node src/build.js"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,8 @@
   },
   "homepage": "https://github.com/Hailubby/761_ChatBot#readme",
   "dependencies": {
-    "body-parser": "*",
-    "express": "*",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
     "fs": "0.0.1-security",
     "request": "^2.72.0",
     "xlsx": "^0.11.3"
