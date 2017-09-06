@@ -54,17 +54,54 @@ class Log {
       spreadsheetId: spagSheet,
       range: userId + '!A1:A2',
       valueInputOption: 'RAW',
-      insertDataOption: 'INSERT_ROWS'
+      insertDataOption: 'INSERT_ROWS',
+      data: [{
+        range: 'A1:A3',
+        majorDimension: ROWS,
+        values: [userId, message, new Date(Date.now()).toString()]
+      }]
     };
 
     this.sheets.spreadsheets.values.append(req, (err, response) => {
       if (err) {
         // need to be able make the sheet if the error message says that
         // sheet does not exist.
+        if (err.includes('Unable to parse range')){
+          console.error(err);
+          this.makeSheet(userId, message);
+        }
+      }
+      // TODO: Change code below to process the `response` object:
+      console.log(JSON.stringify(response, null, 2));
+    });
+  }
+
+  /**
+   * Make an individual sheet in the workbook for a new user log.
+   *
+   * @param {string} userid
+   * @param {Message} message
+   */
+  makeSheet(userid, message){
+    let getReqt = {
+      spreadsheetId: spagSheet,
+      auth: this.auth,
+      data: [{
+        range: 'A1:A3',
+        majorDimension: ROWS,
+        values: [userid, message, new Date(Date.now()).toString()]
+      }],
+      properties: {
+        title: userid
+      }
+    };
+
+    this.sheets.spreadsheets.values.batchUpdate(getReqt, (err, response) => {
+      if (err) {
         console.error(err);
         return;
       }
-      // TODO: Change code below to process the `response` object:
+
       console.log(JSON.stringify(response, null, 2));
     });
   }
