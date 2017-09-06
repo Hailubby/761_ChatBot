@@ -2,7 +2,7 @@ const FBClient = require('./fbclient.js');
 const Message = require('./message.js');
 const Command = require('./command.js');
 const Client = new FBClient();
-const Log = require('./log.js');
+const Logger = require('./log.js');
 
 class Bot{
   constructor(){
@@ -11,7 +11,7 @@ class Bot{
     // Top level commands
     this.commands = [];
     // Logger
-    this.logger = new Log();
+    this.logger = new Logger();
   }
 
   /**

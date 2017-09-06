@@ -1,6 +1,5 @@
 const google = require('googleapis');
 const GoogleAuth = require('google-auth-library');
-const spagSheet = '1sapWQp1Xom9xFt0G2cWUGumh3pUsXHDMtWQf0_7HPFg';
 const config = require('../config.json');
 
 class Log {
@@ -15,10 +14,10 @@ class Log {
   }
 
   append(message) {
-    let req = {
+    const req = {
       auth: this.auth,
-      spreadsheetId: spagSheet,
-      range: message.senderId + '!A1:A3',
+      spreadsheetId: config.LOGGING_BOOK,
+      range: `${message.senderId}!A1:A3`,
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       resource: {
@@ -33,6 +32,7 @@ class Log {
         // need to be able make the sheet if the error message says that
         // sheet does not exist.
         console.error(err);
+        // eslint-disable-next-line eqeqeq
         if (err.code == 400) {
           this.makeSheet(message);
         }
@@ -47,8 +47,8 @@ class Log {
    * @param {Message} message
    */
   makeSheet(message) {
-    let getReqt = {
-      spreadsheetId: spagSheet,
+    let req = {
+      spreadsheetId: config.LOGGING_BOOK,
       auth: this.auth,
       resource: {
         requests: [{
@@ -61,7 +61,7 @@ class Log {
       }
     };
 
-    this.sheets.spreadsheets.batchUpdate(getReqt, (err, response) => {
+    this.sheets.spreadsheets.batchUpdate(req, (err, response) => {
       if (err) {
         console.error(err);
         return;
