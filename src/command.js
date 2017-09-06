@@ -4,13 +4,13 @@ class Command {
    *
    * The respond object "function" is responsible for handling multiple responses for the same key.
    *
-   * @param {RegExp} key
+   * @param {string} key
    * @param {function} respond
    * @param {Command[]} followup
    */
-  constructor(key, respond=msg => {}, followup = []){
+  constructor(key, respond = msg => {}, followup = []){
     // name of key
-    this.key = key;
+    this.key = new RegExp(key, 'i');
     // Response this convo gives
     this.respond = respond;
     // follow up convos

@@ -1,6 +1,8 @@
 {
   "PAGE_ACCESS_TOKEN":"EAADuNmTZAnZCgBAL9wnx1TJ7uR74vnmhZAWk4qI7K5zuZBuY92ZCzsOyJkTdZAKQROrRwozxWfkHvvscbsmlWIyOuMDbdujZCsemMGYfrj3BZCXywfB6hvAj9Bq0rLdATZB4PF7g0wG2KhPtOdoEtiPPbLdRAkaAuKTZBTKIWykYCH7wZDZD",
   "VERIFY_TOKEN":"spgetti-token",
-  "CLIENT_SECRET":{"installed":{"client_id":"210640399487-cfef3ikglp34cr91tkci5arrikouue2q.apps.googleusercontent.com","project_id":"indigo-griffin-161602","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"ikb4-5Vc0pqzXRKLeT6o8nHo","redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]}},
+  "MESSAGES_SHEET_LOCATION": "resources\\SPGeTTi_messages.xlsx",
+  "LOAD_MODULES": ["CONVERSATION"]
   "SHEET_AUTH":{"access_token":"ya29.Glu9BMl-B9XE0xMx_E4B-82SzHnCOtsC_6OgWmuOpQsyNA7duttzuswgreAKEmkocZ_P-Z9Jmax8CL5nmVDCwzz7SzEfp2rn1yGkh6yH9JYby7l5bEHFQZUC9KTC","refresh_token":"1/9X5OkmzzrkIKyXP67FsTLVynvu0lnZui503pIg73Epw","token_type":"Bearer","expiry_date":1504657529378}
+  "CLIENT_SECRET":{"installed":{"client_id":"210640399487-cfef3ikglp34cr91tkci5arrikouue2q.apps.googleusercontent.com","project_id":"indigo-griffin-161602","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"ikb4-5Vc0pqzXRKLeT6o8nHo","redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]}},
 }
