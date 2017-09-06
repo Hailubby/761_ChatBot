@@ -31,7 +31,6 @@ class Log {
       if (err) {
         // need to be able make the sheet if the error message says that
         // sheet does not exist.
-        console.error(err);
         // eslint-disable-next-line eqeqeq
         if (err.code == 400) {
           this.makeSheet(message);
