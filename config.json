@@ -1,4 +1,6 @@
 {
   "PAGE_ACCESS_TOKEN":"EAADuNmTZAnZCgBAL9wnx1TJ7uR74vnmhZAWk4qI7K5zuZBuY92ZCzsOyJkTdZAKQROrRwozxWfkHvvscbsmlWIyOuMDbdujZCsemMGYfrj3BZCXywfB6hvAj9Bq0rLdATZB4PF7g0wG2KhPtOdoEtiPPbLdRAkaAuKTZBTKIWykYCH7wZDZD",
-  "VERIFY_TOKEN":"spgetti-token"
+  "VERIFY_TOKEN":"spgetti-token",
+  "MESSAGES_SHEET_LOCATION": "resources\\SPGeTTi_messages.xlsx",
+  "LOAD_MODULES": ["CONVERSATION"]
 }
