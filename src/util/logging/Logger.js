@@ -1,6 +1,6 @@
 const google = require('googleapis');
 const GoogleAuth = require('google-auth-library');
-const config = require('../config.json');
+const config = require('../../../config.json');
 
 class Logger {
   constructor() {
@@ -13,17 +13,17 @@ class Logger {
     this.auth.credentials = config.SHEET_AUTH;
   }
 
-  append(message) {
+  log(senderId, text, sendRec) {
     const req = {
       auth: this.auth,
       spreadsheetId: config.LOGGING_BOOK,
-      range: `${message.senderId}!A1:A3`,
+      range: `${senderId}!A1:A3`,
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       resource: {
-        range: `${message.senderId}!A1:A3`,
+        range: `${senderId}!A1:A3`,
         majorDimension: 'ROWS',
-        values: [[message.senderId, message.text, new Date(Date.now()).toString()]]
+        values: [[sendRec, text, new Date(Date.now()).toString()]]
       }
     };
 
@@ -33,7 +33,8 @@ class Logger {
         // sheet does not exist.
         // eslint-disable-next-line eqeqeq
         if (err.code == 400) {
-          this.makeSheet(message);
+          this.makeSheet(senderId);
+          this.log(senderId, text, sendRec);
         }
       }
     });
@@ -45,7 +46,7 @@ class Logger {
    * @param {string} userid
    * @param {Message} message
    */
-  makeSheet(message) {
+  makeSheet(senderId) {
     let req = {
       spreadsheetId: config.LOGGING_BOOK,
       auth: this.auth,
@@ -53,7 +54,7 @@ class Logger {
         requests: [{
           addSheet: {
             properties: {
-              title: message.senderId
+              title: senderId
             }
           }
         }]
@@ -65,7 +66,6 @@ class Logger {
         console.error(err);
         return;
       }
-      this.append(message);
     });
   }
 }

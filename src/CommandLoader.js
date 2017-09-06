@@ -62,23 +62,17 @@ class CommandLoader {
   /**
    * Makes a response function based on the command object.
    *
-   * @param {*} obj - An excel row object
+   * @param {Object} obj - An excel row object
    */
   makeResponse(obj) {
       if (obj['Response Type'] === 'String') {
-          return this.makeStringFunction(obj['Bot Response']);
+          return ((msg) => {
+            const Logger = require('./util/logging/Logger');
+            const logger = new Logger();
+            logger.log(msg.senderId, obj['Bot Response'], 'sent');
+            msg.sendMessage(obj['Bot Response']);
+          });
       }
-  }
-
-  /**
-   * Makes a Command.respond function sending a string as a message.
-   * @param {string} responseMsg
-   */
-  makeStringFunction(responseMsg) {
-    const instructions = `msg.sendMessage("${responseMsg}");`;
-    const func = new Function('msg', instructions);
-
-    return (func);
   }
 }
 
