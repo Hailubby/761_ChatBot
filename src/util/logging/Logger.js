@@ -2,7 +2,7 @@ const google = require('googleapis');
 const GoogleAuth = require('google-auth-library');
 const config = require('../config.json');
 
-class Log {
+class Logger {
   constructor() {
     this.sheets = google.sheets('v4');
     this.clientSecret = config.CLIENT_SECRET.installed.client_secret;
@@ -69,4 +69,4 @@ class Log {
     });
   }
 }
-module.exports = Log;
+module.exports = Logger;

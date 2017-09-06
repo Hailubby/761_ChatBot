@@ -2,7 +2,7 @@ const FBClient = require('./fbclient.js');
 const Message = require('./message.js');
 const Command = require('./command.js');
 const Client = new FBClient();
-const Logger = require('./log.js');
+const Logger = require('./util/logging/logger.js');
 
 
 class Bot{
