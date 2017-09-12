@@ -8,7 +8,7 @@ class Command {
    * @param {function} respond
    * @param {Command[]} followup
    */
-  constructor(key, respond = msg => {}, followup = []){
+  constructor(key, respond = session => {}, followup = []){
     // name of key
     this.key = new RegExp(key, 'i');
     // Response this convo gives

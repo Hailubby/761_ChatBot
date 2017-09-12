@@ -66,11 +66,11 @@ class CommandLoader {
    */
   makeResponse(obj) {
       if (obj['Response Type'] === 'String') {
-          return ((msg) => {
+          return ((session) => {
             const Logger = require('./util/logging/Logger');
             const logger = new Logger();
-            logger.log(msg.senderId, obj['Bot Response'], 'sent');
-            msg.sendMessage(obj['Bot Response']);
+            logger.log(session.message.user.id, obj['Bot Response'], 'sent');
+            session.send(obj['Bot Response']);
           });
       }
   }
