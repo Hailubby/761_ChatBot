@@ -1,6 +1,5 @@
 const FBClient = require('./fbclient.js');
-const Message = require('./message.js');
-const Command = require('./command.js');
+const Logger = require('./util/logging/Logger.js');
 const Client = new FBClient();
 const NLP = require('./nlp.js');
 
@@ -11,6 +10,8 @@ class Bot{
     this.userFollowups = {};
     // Top level commands
     this.commands = [];
+    // Logger
+    this.logger = new Logger();
   }
 
   /**
@@ -26,6 +27,7 @@ class Bot{
 
       let nlp = new NLP();
 
+      this.logger.log(message.senderId, message.text, 'receive');
       let responded = false;
       if (this.userFollowups[message.senderID]){
           responded = nlp.processMessage(this.userFollowups[message.senderID],this.userFollowups,message);
