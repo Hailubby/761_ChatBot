@@ -1,6 +1,8 @@
-const FBClient = require('./fbclient.js');
 const Logger = require('./util/logging/Logger.js');
-const Client = new FBClient();
+const builder = require('botbuilder');
+const express = require('express');
+const bodyParser = require('body-parser');
+const config = require('../config.json');
 const NLP = require('./nlp.js');
 
 
@@ -12,6 +14,11 @@ class Bot{
     this.commands = [];
     // Logger
     this.logger = new Logger();
+    this.app = express();
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({
+      extended: true
+    }));
   }
 
   /**
@@ -21,7 +28,21 @@ class Bot{
    * facebook will send it's messages to.
    */
   run(){
-    Client.onMessage(message => {
+    // Create chat connector for communicating with the Bot Framework Service
+    const connector = new builder.ChatConnector({
+        appId: config.MICROSOFT_APP_ID,
+        appPassword: config.MICROSOFT_APP_PASSWORD
+    });
+
+    // Listen for messages from users 
+    this.app.post('/webhook', connector.listen());
+
+    const server = this.app.listen(3000, function () {
+      console.log('Listening on port %s', server.address().port);
+    });
+
+    // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
+    const bot = new builder.UniversalBot(connector, session => {
       // If there is an existing object in the dictionary then go through the array
       // of commands that this user can do.
 
@@ -35,8 +56,7 @@ class Bot{
       if (!responded){
          nlp.processMessage(this.commands,this.userFollowups,message);
       }
-    }, this);
-    Client.listen();
+    });
   }
 
   /**

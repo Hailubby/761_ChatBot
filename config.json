@@ -6,6 +6,6 @@
   "SHEET_AUTH":{"access_token":"ya29.Glu9BMl-B9XE0xMx_E4B-82SzHnCOtsC_6OgWmuOpQsyNA7duttzuswgreAKEmkocZ_P-Z9Jmax8CL5nmVDCwzz7SzEfp2rn1yGkh6yH9JYby7l5bEHFQZUC9KTC","refresh_token":"1/9X5OkmzzrkIKyXP67FsTLVynvu0lnZui503pIg73Epw","token_type":"Bearer","expiry_date":1504657529378},
   "CLIENT_SECRET":{"installed":{"client_id":"210640399487-cfef3ikglp34cr91tkci5arrikouue2q.apps.googleusercontent.com","project_id":"indigo-griffin-161602","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"ikb4-5Vc0pqzXRKLeT6o8nHo","redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]}},
   "LOGGING_BOOK" : "1ZvkpfeUgNaZjo5vhcATjtyiMtum0TF5hPHhfI0z6iTE",
-  "MICROSOFT_ID" : "a8730359-4a1f-4ba7-8a75-e2274fb380ce",
-  "MICROSOFT_PASS" : "TUxF9x5ysqGYmchEC7Ne8LG"
+  "MICROSOFT_APP_ID" : "a8730359-4a1f-4ba7-8a75-e2274fb380ce",
+  "MICROSOFT_APP_PASSWORD" : "TUxF9x5ysqGYmchEC7Ne8LG"
 }
