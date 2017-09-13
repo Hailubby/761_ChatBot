@@ -25,16 +25,17 @@
   },
   "homepage": "https://github.com/Hailubby/761_ChatBot#readme",
   "dependencies": {
-    "natural": "^0.5.4",
-    "request": "^2.72.0",
     "body-parser": "^1.17.2",
     "botbuilder": "^3.9.1",
     "express": "^4.15.4",
     "fs": "0.0.1-security",
-    "xlsx": "^0.11.3",
-    "googleapis": "^21.3.0",
     "google-auth-library": "^0.10.0",
+    "googleapis": "^21.3.0",
+    "natural": "^0.5.4",
+    "qs": "^6.5.1",
+    "request": "^2.72.0",
     "restify": "^5.2.0",
+    "xlsx": "^0.11.3"
   },
   "devDependencies": {
     "editorconfig": "^0.14.1",

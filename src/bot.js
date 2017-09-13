@@ -19,20 +19,21 @@ class Bot {
     this.app.use(bodyParser.urlencoded({
       extended: true
     }));
+    this.nlp = new NLP();
   }
 
   /**
    * Initializes and runs the bot.
    * Bot will listen for and respond to recognized user messages on run().
    */
-  run(){
+  run() {
     // Create chat connector for communicating with the Bot Framework Service
     this.connector = new builder.ChatConnector({
         appId: config.MICROSOFT_APP_ID,
         appPassword: config.MICROSOFT_APP_PASSWORD
     });
 
-    // Listen for messages from users 
+    // Listen for messages from users
     this.app.post('/webhook', connector.listen());
 
     this.server = this.app.listen(3000, function () {
@@ -47,7 +48,8 @@ class Bot {
       let responded = false;
       if (this.userFollowups[session.message.user.id]){
         this.userFollowups[session.message.user.id].every(command => {
-          if (command.match(session.message.text)){
+          let intent = this.nlp.processMessage(session.message.text);
+          if (command.match(intent)){
             command.respond(session);
             this.userFollowups[session.message.user.id] = command.followup;
             responded = true;
@@ -60,7 +62,8 @@ class Bot {
       // If message has not been responded to, attempt to find a top level response
       if (!responded){
         this.commands.every(command => {
-          if (command.match(session.message.text)){
+          let intent = this.nlp.processMessage(session.message.text);
+          if (command.match(intent)){
             command.respond(session);
             this.userFollowups[session.message.user.id] = command.followup;
             return false;
@@ -76,7 +79,7 @@ class Bot {
    *
    * @param {Command[]} commands
    */
-  load(commands){
+  load(commands) {
     this.commands.push.apply(this.commands, commands);
   }
 }
