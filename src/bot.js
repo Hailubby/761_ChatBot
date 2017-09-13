@@ -22,6 +22,8 @@ class Bot {
     this.nlp = new NLP();
   }
 
+
+
   /**
    * Initializes and runs the bot.
    * Bot will listen for and respond to recognized user messages on run().
@@ -34,44 +36,49 @@ class Bot {
     });
 
     // Listen for messages from users
-    this.app.post('/webhook', connector.listen());
+    this.app.post('/webhook', this.connector.listen());
 
-    this.server = this.app.listen(3000, function () {
-      console.log('Listening on port %s', server.address().port);
+    const server = this.app.listen(3000, () => {
+      console.log(`Listening on port ${server.address().port}`);
     });
 
     // Receive messages from the user
-    this.bot = new builder.UniversalBot(connector, session => {
+    this.bot = new builder.UniversalBot(this.connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive');
 
-      // Check if message should be responded to by a mid-level conversation thread followup
-      let responded = false;
-      if (this.userFollowups[session.message.user.id]){
-        this.userFollowups[session.message.user.id].every(command => {
-          let intent = this.nlp.processMessage(session.message.text);
-          if (command.match(intent)){
-            command.respond(session);
-            this.userFollowups[session.message.user.id] = command.followup;
-            responded = true;
-            return false;
-          }
-          return true;
-        });
-      }
-
-      // If message has not been responded to, attempt to find a top level response
-      if (!responded){
-        this.commands.every(command => {
-          let intent = this.nlp.processMessage(session.message.text);
-          if (command.match(intent)){
-            command.respond(session);
-            this.userFollowups[session.message.user.id] = command.followup;
-            return false;
-          }
-          return true;
-        });
-      }
+      this.nlp.processMessage(session, this.match, this);
     });
+  }
+
+  match(session, intent){
+    let responded = false;
+    // console.log(intent);
+
+    // Check if message should be responded to by a mid-level conversation thread followup
+    if (this.userFollowups[session.message.user.id]){
+      this.userFollowups[session.message.user.id].every(command => {
+        if (command.match(intent)){
+          command.respond(session);
+          this.userFollowups[session.message.user.id] = command.followup;
+          responded = true;
+          return false;
+        }
+        return true;
+      });
+    }
+
+    // If message has not been responded to, attempt to find a top level response
+    if (!responded){
+      this.commands.every(command => {
+        if (command.match(intent)){
+          console.error('in');
+          command.respond(session);
+          this.userFollowups[session.message.user.id] = command.followup;
+          return false;
+        }
+        return true;
+      });
+    }
   }
 
   /**
