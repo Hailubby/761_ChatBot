@@ -1,8 +1,8 @@
-const Command = require('./command');
-const config = require('../config.json');
+const Command = require('./Command');
+const config = require('../../../config.json');
 
 /**
- * Loads sets of commands
+ * Loads sets of commands based on modules specified in config.json.
  */
 class CommandLoader {
   constructor() {}
@@ -14,13 +14,13 @@ class CommandLoader {
   /**
    * Loads a set of commands (see Command.js) based on ../config.json LOAD_MODULES.
    *
-   * WARN: Spreadsheet based commands should conform to template.
+   * WARN: Spreadsheet based commands should conform to templates.
    */
   load() {
     let commands = [];
     if (this.shouldLoad('CONVERSATION')) {
-      this.conversationJSON = require('../resources/conversation.json');
-      this.followUpJSON = require('../resources/followup.json');
+      this.conversationJSON = require('../../../resources/conversation.json');
+      this.followUpJSON = require('../../../resources/followup.json');
 
       for (let i = 0; i < this.conversationJSON.length; i++) {
         commands.push(this.getCommand(i, this.conversationJSON));
@@ -32,8 +32,9 @@ class CommandLoader {
 
   /**
    * Loads a command
-   * @param {int} id
-   * @param {object} json
+   * 
+   * @param {int} id The ID of the command to load (should be unique)
+   * @param {object} json The json object containing the command
    */
   getCommand(id, json) {
     const obj = json[id];
@@ -62,15 +63,15 @@ class CommandLoader {
   /**
    * Makes a response function based on the command object.
    *
-   * @param {Object} obj - An excel row object
+   * @param {Object} obj An excel row object
    */
   makeResponse(obj) {
       if (obj['Response Type'] === 'String') {
-          return ((msg) => {
-            const Logger = require('./util/logging/Logger');
+          return ((session) => {
+            const Logger = require('./../logging/Logger');
             const logger = new Logger();
-            logger.log(msg.senderId, obj['Bot Response'], 'sent');
-            msg.sendMessage(obj['Bot Response']);
+            logger.log(session.message.user.id, obj['Bot Response'], 'sent');
+            session.send(obj['Bot Response']);
           });
       }
   }

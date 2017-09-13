@@ -1,34 +1,54 @@
-const FBClient = require('./fbclient.js');
 const Logger = require('./util/logging/Logger.js');
-const Client = new FBClient();
+const builder = require('botbuilder');
+const express = require('express');
+const bodyParser = require('body-parser');
+const config = require('../config.json');
 
-class Bot{
-  constructor(){
+class Bot {
+  constructor() {
     // Conversations mapped to users
     this.userFollowups = {};
     // Top level commands
     this.commands = [];
     // Logger
     this.logger = new Logger();
+
+    this.app = express();
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({
+      extended: true
+    }));
   }
 
   /**
-   *  Handle the commands that the this bot is able to execute.
-   *
-   * Run is called at the start of the application and will listen on the port that
-   * facebook will send it's messages to.
+   * Initializes and runs the bot.
+   * Bot will listen for and respond to recognized user messages on run().
    */
   run(){
-    Client.onMessage(message => {
-      // If there is an existing object in the dictionary then go through the array
-      // of commands that this user can do.
-      this.logger.log(message.senderId, message.text, 'receive');
+    // Create chat connector for communicating with the Bot Framework Service
+    this.connector = new builder.ChatConnector({
+        appId: config.MICROSOFT_APP_ID,
+        appPassword: config.MICROSOFT_APP_PASSWORD
+    });
+
+    // Listen for messages from users 
+    this.app.post('/webhook', connector.listen());
+
+    this.server = this.app.listen(3000, function () {
+      console.log('Listening on port %s', server.address().port);
+    });
+
+    // Receive messages from the user
+    this.bot = new builder.UniversalBot(connector, session => {
+      this.logger.log(session.message.user.id, session.message.text, 'receive');
+
+      // Check if message should be responded to by a mid-level conversation thread followup
       let responded = false;
-      if (this.userFollowups[message.senderId]){
-        this.userFollowups[message.senderId].every(command => {
-          if (command.key.test(message.text)){
-            command.respond(message);
-            this.userFollowups[message.senderId] = command.followup;
+      if (this.userFollowups[session.message.user.id]){
+        this.userFollowups[session.message.user.id].every(command => {
+          if (command.match(session.message.text)){
+            command.respond(session);
+            this.userFollowups[session.message.user.id] = command.followup;
             responded = true;
             return false;
           }
@@ -36,18 +56,18 @@ class Bot{
         });
       }
 
+      // If message has not been responded to, attempt to find a top level response
       if (!responded){
         this.commands.every(command => {
-          if (command.key.test(message.text)){
-            command.respond(message);
-            this.userFollowups[message.senderId] = command.followup;
+          if (command.match(session.message.text)){
+            command.respond(session);
+            this.userFollowups[session.message.user.id] = command.followup;
             return false;
           }
           return true;
         });
       }
-    }, this);
-    Client.listen();
+    });
   }
 
   /**

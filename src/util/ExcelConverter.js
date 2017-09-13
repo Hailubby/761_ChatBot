@@ -4,8 +4,8 @@ const config = require('../../config.json');
 /**
  * A list of loadable excel sheets
  *
- * Key: Flag, should match ../config.json
- * Value: Name of sheet to load
+ * Key: Flag to use on load()
+ * Value: Name of sheet (in excel) to load
  */
 const Modules = {
   'WELCOME': 'Welcome_Messages',
@@ -26,7 +26,8 @@ class ExcelConverter {
 
   /**
    * Converts sheet specified from Modules to json
-   * @param {string} module
+   * 
+   * @param {string} module key of module to load, should be contained in Modules
    */
   convert(module) {
     let sheet = this.workbook.Sheets[Modules[module]];
