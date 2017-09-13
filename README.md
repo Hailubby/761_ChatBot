@@ -51,7 +51,7 @@ Required:
 8. See the User_Initiated_Messages sheet located in the resources/SPGeTTi_messages.xlsx workbook for a list of conversation initiating keywords which the bot understands and can respond to.
 
 ## Adding commands
-1. You may add your own conversation flows into the excel spread sheets User_Initiated_Messages and Follow_Up_Messages such that it conforms to this template:
+* You may add your own conversation flows into the excel spread sheets User_Initiated_Messages and Follow_Up_Messages such that it conforms to this template:
   - ID: sequential identifier for the row
   - Key: string which the bot will recognise and response to
   - Bot Response: what the bot will send back to the user
