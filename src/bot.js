@@ -4,14 +4,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('../config.json');
 
-class Bot{
-  constructor(){
+class Bot {
+  constructor() {
     // Conversations mapped to users
     this.userFollowups = {};
     // Top level commands
     this.commands = [];
     // Logger
     this.logger = new Logger();
+
     this.app = express();
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({
@@ -20,14 +21,12 @@ class Bot{
   }
 
   /**
-   *  Handle the commands that the this bot is able to execute.
-   *
-   * Run is called at the start of the application and will listen on the port that
-   * facebook will send it's messages to.
+   * Initializes and runs the bot.
+   * Bot will listen for and respond to recognized user messages on run().
    */
   run(){
     // Create chat connector for communicating with the Bot Framework Service
-    const connector = new builder.ChatConnector({
+    this.connector = new builder.ChatConnector({
         appId: config.MICROSOFT_APP_ID,
         appPassword: config.MICROSOFT_APP_PASSWORD
     });
@@ -35,19 +34,19 @@ class Bot{
     // Listen for messages from users 
     this.app.post('/webhook', connector.listen());
 
-    const server = this.app.listen(3000, function () {
+    this.server = this.app.listen(3000, function () {
       console.log('Listening on port %s', server.address().port);
     });
 
-    // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
-    const bot = new builder.UniversalBot(connector, session => {
-      // If there is an existing object in the dictionary then go through the array
-      // of commands that this user can do.
+    // Receive messages from the user
+    this.bot = new builder.UniversalBot(connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive');
+
+      // Check if message should be responded to by a mid-level conversation thread followup
       let responded = false;
       if (this.userFollowups[session.message.user.id]){
         this.userFollowups[session.message.user.id].every(command => {
-          if (command.key.test(session.message.text)){
+          if (command.match(session.message.text)){
             command.respond(session);
             this.userFollowups[session.message.user.id] = command.followup;
             responded = true;
@@ -57,9 +56,10 @@ class Bot{
         });
       }
 
+      // If message has not been responded to, attempt to find a top level response
       if (!responded){
         this.commands.every(command => {
-          if (command.key.test(session.message.text)){
+          if (command.match(session.message.text)){
             command.respond(session);
             this.userFollowups[session.message.user.id] = command.followup;
             return false;
