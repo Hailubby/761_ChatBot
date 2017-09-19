@@ -32,14 +32,14 @@ class Bot {
     });
 
     // Listen for messages from users 
-    this.app.post('/webhook', connector.listen());
+    this.app.post('/webhook', this.connector.listen());
 
     this.server = this.app.listen(3000, function () {
-      console.log('Listening on port %s', server.address().port);
+      console.log('Listening on port %s', this.server.address().port);
     });
 
     // Receive messages from the user
-    this.bot = new builder.UniversalBot(connector, session => {
+    this.bot = new builder.UniversalBot(this.connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive');
 
       // Check if message should be responded to by a mid-level conversation thread followup
