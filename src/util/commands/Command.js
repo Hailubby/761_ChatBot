@@ -20,7 +20,7 @@ class Command {
 
   /**
    * Checks whether this command matches (ie. should respond to) the message
-   * 
+   *
    * @param {string} message Message to test for match with this command
    */
   match(message) {

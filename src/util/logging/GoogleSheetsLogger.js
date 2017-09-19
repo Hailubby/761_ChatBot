@@ -59,7 +59,7 @@ class GoogleSheetsLogger {
    */
   makeSheet(senderId) {
     let req = {
-      spreadsheetId: config.LOGGING_BOOK,
+      spreadsheetId: config.GOOGLE_LOGGING_BOOK,
       auth: this.auth,
       resource: {
         requests: [{
