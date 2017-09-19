@@ -46,7 +46,13 @@ class Bot {
     this.bot = new builder.UniversalBot(this.connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive');
 
-      this.nlp.processMessage(session, this.match, this);
+      this.nlp.processMessage(session).then(intent => {
+        this.match(session, intent);
+      }, error => {
+        console.error(error);
+      });
+      // this.match(await this.nlp.processMessage(session));
+      // this.nlp.processMessage(session, this.match, this);
     });
   }
 
