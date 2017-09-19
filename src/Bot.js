@@ -3,7 +3,7 @@ const builder = require('botbuilder');
 const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('../config.json');
-const NLP = require('./nlp.js');
+const NLP = require('./NLP.js');
 
 class Bot {
   constructor() {
