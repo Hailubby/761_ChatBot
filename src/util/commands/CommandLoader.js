@@ -1,8 +1,11 @@
 const Command = require('./Command');
+const Store = require('../storage/Store');
+const StoreKeys = require('../storage/StoreKeys');
 const builder = require('botbuilder');
 const config = require('../../../config.json');
 
-const COLUMNS = {
+const PROPERTIES = {
+  ID: 'ID',
   KEY: 'Key',
   TYPE: 'Type',
   FOLLOWUPS: 'Follow Ups',
@@ -10,14 +13,17 @@ const COLUMNS = {
 
 const TYPES = {
   MESSAGE: 'Message',
-  BUTTONS: 'Buttons'
+  BUTTONS: 'Buttons',
+  INPUT: 'Input'
 };
 
 /**
  * Loads sets of commands based on modules specified in config.json.
  */
 class CommandLoader {
-  constructor() {}
+  constructor() {
+    this.store = new Store();
+  }
 
   shouldLoad(module) {
     return config.LOAD_MODULES.includes(module);
@@ -50,10 +56,10 @@ class CommandLoader {
    */
   getCommand(id, json) {
     const obj = json[id];
-    const key = obj[COLUMNS.KEY];
+    const key = obj[PROPERTIES.KEY];
     const respond = this.makeResponse(obj);
 
-    let followUpsIDArr = obj[COLUMNS.FOLLOWUPS];
+    let followUpsIDArr = obj[PROPERTIES.FOLLOWUPS];
 
     if (followUpsIDArr) {
       followUpsIDArr = followUpsIDArr.split(';').map(function(item) {
@@ -78,18 +84,26 @@ class CommandLoader {
    * @param {Object} msgProto A json object representing a message
    */
   makeResponse(msgProto) {
-    const types = msgProto[COLUMNS.TYPE].split(';');
+    const types = msgProto[PROPERTIES.TYPE].split(';');
 
-    return ((session) => {
+    /* eslint-disable max-statements */
+    return (session => {
       const Logger = require('./../logging/Logger');
       const logger = new Logger();
-      logger.log(session.message.user.id, msgProto[TYPES.MESSAGE], 'sent');
+
+      logger.log(
+        session.message.user.id,
+        msgProto[TYPES.MESSAGE],
+        'sent'
+      );
 
       const msg = new builder.Message(session);
+      // Add message if response includes a message (text)
       if (types.includes(TYPES.MESSAGE)) {
         msg.text(msgProto[TYPES.MESSAGE]);
       }
 
+      // Add buttons if response includes buttons
       if (types.includes(TYPES.BUTTONS)) {
         let buttonText = msgProto[TYPES.BUTTONS];
         buttonText = buttonText.split(';');
@@ -102,8 +116,18 @@ class CommandLoader {
         );
       }
 
+      // Store input if response stores input
+      if (types.includes(TYPES.INPUT)) {
+        let key = StoreKeys.indexOf(msgProto[TYPES.INPUT]);
+        if (key) {
+          console.log(session.message.text);
+          this.store.write(session.message.user.id, key, session.message.text);
+        }
+      }
+
       session.send(msg);
     });
+    /* eslint-enable max-statements */
   }
 }
 

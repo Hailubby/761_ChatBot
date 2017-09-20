@@ -14,16 +14,17 @@
   },
   {
     "ID": "2",
-    "Type": "Message;Buttons",
+    "Type": "Message;Buttons;Input",
     "Message": "Great, so to achieve that, do you want to stop all gambling?",
     "Buttons": "Yes;No",
+    "Input": "Benefits",
     "Follow Ups": "3;4"
   },
   {
     "ID": "3",
     "Key": "yes",
     "Type": "Message",
-    "Message": "Great, here are some quick tips to start this journey:  Avoid tempting environments; Limit access to finances; Find healthier activities to do"
+    "Message": "Great, here are some quick tips to start this journey:  Avoid tempting environments; Limit access to finances; Find healthier activities to do."
   },
   {
     "ID": "4",
@@ -37,7 +38,7 @@
     "ID": "5",
     "Key": "yes",
     "Type": "Message",
-    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve",
+    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve.",
     "Follow Ups": "7"
   },
   {
@@ -48,7 +49,8 @@
   },
   {
     "ID": "7",
-    "Type": "Message",
-    "Message": "echo"
+    "Type": "Message;Input",
+    "Message": "That’s great! I'll hold you to it.",
+    "Input": "Goals"
   }
 ]
