@@ -37,10 +37,9 @@ class GoogleSheetsStore {
         values: [[StoreKeys[key], value]]
       }
     };
-    console.log(req);
     this.sheets.spreadsheets.values.update(req, (err, res) => {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
   }
@@ -51,7 +50,21 @@ class GoogleSheetsStore {
    * @param {*} key
    */
   read(id, key) {
-    return 'hello';
+    return new Promise( (resolve, reject) => {
+        const req = {
+          auth: this.auth,
+          spreadsheetId: config.GOOGLE_LOGGING_BOOK,
+          range: `${id}!E${key}:F${key}`
+        };
+        
+        this.sheets.spreadsheets.values.get(req, (err, res) => {
+            if (err){
+                reject(err);
+            }
+            resolve(res.values[0][1]);
+        });
+    })
+    
   }
 }
 

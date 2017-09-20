@@ -14,10 +14,10 @@
   },
   {
     "ID": "2",
-    "Type": "Message;Buttons;Input",
+    "Type": "Message;Buttons;Store",
     "Message": "Great, so to achieve that, do you want to stop all gambling?",
     "Buttons": "Yes;No",
-    "Input": "Benefits",
+    "Store": "Benefits",
     "Follow Ups": "3;4"
   },
   {
@@ -49,8 +49,8 @@
   },
   {
     "ID": "7",
-    "Type": "Message;Input",
-    "Message": "That’s great! I'll hold you to it.",
-    "Input": "Goals"
+    "Type": "Message;Store",
+    "Message": "That’s great! I'll hold you to that!",
+    "Store": "Goals"
   }
 ]

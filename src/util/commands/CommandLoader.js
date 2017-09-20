@@ -14,7 +14,8 @@ const PROPERTIES = {
 const TYPES = {
   MESSAGE: 'Message',
   BUTTONS: 'Buttons',
-  INPUT: 'Input'
+  STORE: 'Store',
+  RECALL: 'Recall'
 };
 
 /**
@@ -97,6 +98,7 @@ class CommandLoader {
         'sent'
       );
 
+      let sendable = true;
       const msg = new builder.Message(session);
       // Add message if response includes a message (text)
       if (types.includes(TYPES.MESSAGE)) {
@@ -117,15 +119,36 @@ class CommandLoader {
       }
 
       // Store input if response stores input
-      if (types.includes(TYPES.INPUT)) {
-        let key = StoreKeys.indexOf(msgProto[TYPES.INPUT]);
+      if (types.includes(TYPES.STORE)) {
+        let key = StoreKeys.indexOf(msgProto[TYPES.STORE]);
         if (key) {
-          console.log(session.message.text);
           this.store.write(session.message.user.id, key, session.message.text);
         }
       }
+      
+      if (types.includes(TYPES.RECALL)) {
+          sendable = false;
+          let key = StoreKeys.indexOf(msgProto[TYPES.RECALL]);
+          if (key) {
+            this.store.read(session.message.user.id, key)
+            .then(value => {
+                let text = msgProto[TYPES.MESSAGE];
+                console.log(text);
+                text.replace(`[${msgProto[TYPES.RECALL]}]`, value);
+                console.log(text);
+                console.log(msg.text);
+                msg.text(text);
+                console.log(msg.text);
+                session.send(msg);
+            });
+          }
+      }
 
-      session.send(msg);
+      // Only send if async tasks are not constructing message
+      // TODO This will create race conditions with multiple asyncs
+      if (sendable) {
+        session.send(msg);
+      }      
     });
     /* eslint-enable max-statements */
   }
