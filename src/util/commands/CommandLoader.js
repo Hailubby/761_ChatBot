@@ -1,5 +1,17 @@
 const Command = require('./Command');
+const builder = require('botbuilder');
 const config = require('../../../config.json');
+
+const COLUMNS = {
+  KEY: 'Key',
+  TYPE: 'Type',
+  FOLLOWUPS: 'Follow Ups',
+};
+
+const TYPES = {
+  MESSAGE: 'Message',
+  BUTTONS: 'Buttons'
+};
 
 /**
  * Loads sets of commands based on modules specified in config.json.
@@ -32,16 +44,16 @@ class CommandLoader {
 
   /**
    * Loads a command
-   * 
+   *
    * @param {int} id The ID of the command to load (should be unique)
    * @param {object} json The json object containing the command
    */
   getCommand(id, json) {
     const obj = json[id];
-    const key = obj['Key'];
+    const key = obj[COLUMNS.KEY];
     const respond = this.makeResponse(obj);
 
-    let followUpsIDArr = obj['Follow Ups'];
+    let followUpsIDArr = obj[COLUMNS.FOLLOWUPS];
 
     if (followUpsIDArr) {
       followUpsIDArr = followUpsIDArr.split(';').map(function(item) {
@@ -63,17 +75,35 @@ class CommandLoader {
   /**
    * Makes a response function based on the command object.
    *
-   * @param {Object} obj An excel row object
+   * @param {Object} msgProto A json object representing a message
    */
-  makeResponse(obj) {
-      if (obj['Response Type'] === 'String') {
-          return ((session) => {
-            const Logger = require('./../logging/Logger');
-            const logger = new Logger();
-            logger.log(session.message.user.id, obj['Bot Response'], 'sent');
-            session.send(obj['Bot Response']);
-          });
+  makeResponse(msgProto) {
+    const types = msgProto[COLUMNS.TYPE].split(';');
+
+    return ((session) => {
+      const Logger = require('./../logging/Logger');
+      const logger = new Logger();
+      logger.log(session.message.user.id, msgProto[TYPES.MESSAGE], 'sent');
+
+      const msg = new builder.Message(session);
+      if (types.includes(TYPES.MESSAGE)) {
+        msg.text(msgProto[TYPES.MESSAGE]);
       }
+
+      if (types.includes(TYPES.BUTTONS)) {
+        let buttonText = msgProto[TYPES.BUTTONS];
+        buttonText = buttonText.split(';');
+        let buttons = [];
+        buttonText.forEach((button) => {
+          buttons.push(builder.CardAction.imBack(session, button, button));
+        });
+        msg.suggestedActions(
+          builder.SuggestedActions.create(session, buttons)
+        );
+      }
+
+      session.send(msg);
+    });
   }
 }
 
