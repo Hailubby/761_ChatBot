@@ -16,12 +16,12 @@ if (shouldLoad('CONVERSATION')) {
 
     fs.writeFileSync(
         `${__dirname}/../resources/conversation.json`,
-        JSON.stringify(converter.convert('CONVERSATION'))
+        JSON.stringify(converter.convert('CONVERSATION'), null, 2)
     );
 
     fs.writeFileSync(
         `${__dirname}/../resources/followup.json`,
-        JSON.stringify(converter.convert('FOLLOWUP'))
+        JSON.stringify(converter.convert('FOLLOWUP'), null, 2)
     );
 }
 
