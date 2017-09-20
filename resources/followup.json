@@ -14,17 +14,16 @@
   },
   {
     "ID": "2",
-    "Type": "Message;Buttons;Store",
+    "Type": "Message;Buttons",
     "Message": "Great, so to achieve that, do you want to stop all gambling?",
     "Buttons": "Yes;No",
-    "Store": "Benefits",
     "Follow Ups": "3;4"
   },
   {
     "ID": "3",
     "Key": "yes",
     "Type": "Message",
-    "Message": "Great, here are some quick tips to start this journey:  Avoid tempting environments; Limit access to finances; Find healthier activities to do."
+    "Message": "Great, here are some quick tips to start this journey:  Avoid tempting environments; Limit access to finances; Find healthier activities to do"
   },
   {
     "ID": "4",
@@ -38,8 +37,7 @@
     "ID": "5",
     "Key": "yes",
     "Type": "Message",
-    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve.",
-    "Follow Ups": "7"
+    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve"
   },
   {
     "ID": "6",
@@ -49,8 +47,110 @@
   },
   {
     "ID": "7",
-    "Type": "Message;Store",
-    "Message": "That’s great! I'll hold you to that!",
-    "Store": "Goals"
+    "Type": "Message",
+    "Message": "echo"
+  },
+  {
+    "ID": "8",
+    "Key": "yes",
+    "Type": "Message;Buttons",
+    "Message": "You are not alone. Do you want to talk to someone?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "10;11"
+  },
+  {
+    "ID": "9",
+    "Key": "no",
+    "Type": "Message;Buttons",
+    "Message": "Do you think you can win back what you have lost by gambling more?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "12"
+  },
+  {
+    "ID": "10",
+    "Key": "yes",
+    "Type": "Message",
+    "Message": "You can phone a friend, call the Gambling Helpline 0800 654 655 or text 8006 for more information"
+  },
+  {
+    "ID": "11",
+    "Key": "no",
+    "Type": "Message",
+    "Message": "If you want more information, you can go to choicenotchance.org.nz"
+  },
+  {
+    "ID": "12",
+    "Type": "Message;Buttons",
+    "Message": "Do you gamble using money meant for other things?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "13"
+  },
+  {
+    "ID": "13",
+    "Type": "Message;Buttons",
+    "Message": "Do you lie about your gambling to people you care about?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "14"
+  },
+  {
+    "ID": "14",
+    "Type": "Message;Buttons",
+    "Message": "Do you get angry or defensive when people ask about your gambling?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "15"
+  },
+  {
+    "ID": "15",
+    "Type": "Message;Buttons",
+    "Message": "Do you borrow money just so you can gamble?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "16"
+  },
+  {
+    "ID": "16",
+    "Type": "Message;Buttons",
+    "Message": "Did you answer yes to most of these?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "17;18"
+  },
+  {
+    "ID": "17",
+    "Key": "yes",
+    "Type": "Message;Buttons",
+    "Message": "It looks like gambling is hurting you and maybe those you care about. Do you want to talk to someone about it?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "10;11"
+  },
+  {
+    "ID": "18",
+    "Key": "no",
+    "Type": "Message",
+    "Message": "Okay that's great! If you want more information, you can go to choicenotchance.org.nz"
+  },
+  {
+    "ID": "19",
+    "Key": "yes",
+    "Type": "Message;Buttons",
+    "Message": "Do you prefer indoors or outdoors activities?",
+    "Buttons": "Indoors;Outdoors",
+    "Follow Ups": "21;22"
+  },
+  {
+    "ID": "20",
+    "Key": "no",
+    "Type": "Message",
+    "Message": "That's fine! You can always come back for more ideas if you need"
+  },
+  {
+    "ID": "21",
+    "Key": "indoors",
+    "Type": "Message",
+    "Message": "Why don't you invite your friends over for dinner? You find some recipes at myfamily.kiwi/foods"
+  },
+  {
+    "ID": "22",
+    "Key": "outdoors",
+    "Type": "Message",
+    "Message": "You can go for a walk, visit a museum or gallery with your friends or family. Going to a nearby park is also a fun thing to do!"
   }
 ]

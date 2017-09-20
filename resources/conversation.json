@@ -9,9 +9,18 @@
   },
   {
     "ID": "1",
-    "Key": "my goal",
-    "Type": "Message;Recall",
-    "Message": "You set a goal of [Goals].  How is that going?",
-    "Recall": "Goals"
+    "Key": "problems",
+    "Type": "Message;Buttons",
+    "Message": "Do you think you have a problem?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "8;9"
+  },
+  {
+    "ID": "2",
+    "Key": "stressed",
+    "Type": "Message;Buttons",
+    "Message": "Do you need some ideas to help you relax?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "19;20"
   }
 ]

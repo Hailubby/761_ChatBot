@@ -14,13 +14,11 @@ An interactive chatbot to help guide people to information on gambling issues to
 
 ## Setup
 
-1. Install node.js from https://nodejs.org/
-2. With command line:
-    - Navigate to your development directory
-    - run `git clone _repo_`
-    - run `npm install`
-    - To run, run `node start`
-
+1. The bot is **ACTIVE** on the a glitch server when viewing please be careful when typing in glich as it autocompiles and the bot will be disabled while compiling.
+  - [spagbot](https://glitch.com/edit/#!/join/11b1efd5-8e23-4fd7-a589-83f48cb10c22)
+2. Glitch will pull from our master branch when prompted, clearing what's currently active and replacing it with master. However, code can aslo be edited from glitch which is how we have been testing our product live.
+3. To make changes to code on glitch you must _copy_ and _paste_ your source code onto the correct place in glitch
+4. All important keys are stored in config.json. This is temporarily in source control with development keys but should be replaced with enterprise keys when in production
 
 ## Editing environment
 
