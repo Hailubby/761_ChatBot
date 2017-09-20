@@ -95,6 +95,50 @@ class NLP {
                 });
         });
     }
+
+    train() {
+        let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/versions/0.1/train';
+
+        console.log(requestURL);
+
+        request.post({
+            url: requestURL,
+            qs: {
+                'subscription-key': config.LUIS_API_KEY
+            }
+        },
+            (err, res, body) => {
+                if (res.statusCode == 202) {
+                    console.log('Response: ' + res.body);
+                } else {
+                    console.log(Error(err));
+                }
+            });
+    }
+
+    publish() {
+        let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/publish';
+
+        request.post({
+            url: requestURL,
+            qs: {
+                'subscription-key': config.LUIS_API_KEY
+            },
+            form: {
+                versionId: '0.1',
+                isStaging: true,
+                region: 'westus'
+            }
+        },
+            (err, res, body) => {
+                if (res.statusCode == 201) {
+                    console.log('Response: ' + res.body)
+                } else {
+                    console.log(Error(err));
+                }
+            });
+    }
+
 }
 
 module.exports = NLP;
