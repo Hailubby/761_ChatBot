@@ -120,28 +120,20 @@ class CommandLoader {
 
       // Store input if response stores input
       if (types.includes(TYPES.STORE)) {
-        let key = StoreKeys.indexOf(msgProto[TYPES.STORE]);
-        if (key) {
-          this.store.write(session.message.user.id, key, session.message.text);
-        }
+        let key = StoreKeys.Keys.indexOf(msgProto[TYPES.STORE]);
+        this.store.write(session.message.user.id, key, session.message.text);
       }
       
       if (types.includes(TYPES.RECALL)) {
-          sendable = false;
-          let key = StoreKeys.indexOf(msgProto[TYPES.RECALL]);
-          if (key) {
-            this.store.read(session.message.user.id, key)
-            .then(value => {
-                let text = msgProto[TYPES.MESSAGE];
-                console.log(text);
-                text.replace(`[${msgProto[TYPES.RECALL]}]`, value);
-                console.log(text);
-                console.log(msg.text);
-                msg.text(text);
-                console.log(msg.text);
-                session.send(msg);
-            });
-          }
+        sendable = false;
+        let key = StoreKeys.Keys.indexOf(msgProto[TYPES.RECALL]);
+        this.store.read(session.message.user.id, key)
+        .then(value => {
+          let text = msgProto[TYPES.MESSAGE];
+          text = text.replace(`[${msgProto[TYPES.RECALL]}]`, value);
+          msg.text(text);
+          session.send(msg);
+        });
       }
 
       // Only send if async tasks are not constructing message

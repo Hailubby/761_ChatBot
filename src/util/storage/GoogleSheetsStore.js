@@ -1,6 +1,6 @@
 const google = require('googleapis');
 const GoogleAuth = require('google-auth-library');
-const StoreKeys = require('./StoreKeys');
+let StoreKeys = require('./StoreKeys');
 const config = require('../../../config.json');
 
 /**
@@ -26,6 +26,7 @@ class GoogleSheetsStore {
    * @param {*} value
    */
   write(id, key, value) {
+    StoreKeys = require('./StoreKeys');
     const req = {
       auth: this.auth,
       spreadsheetId: config.GOOGLE_LOGGING_BOOK,
@@ -50,6 +51,7 @@ class GoogleSheetsStore {
    * @param {*} key
    */
   read(id, key) {
+    StoreKeys = require('./StoreKeys');
     return new Promise( (resolve, reject) => {
         const req = {
           auth: this.auth,
