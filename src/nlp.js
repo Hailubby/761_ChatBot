@@ -34,9 +34,6 @@ class NLP {
         });
     }
     loadIntent(intentName) {
-        let _header = {
-            'Content-Type': 'application/json'
-        };
 
         let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/versions/0.1/intents';
 
@@ -55,14 +52,49 @@ class NLP {
                         console.log('Response: ' + res.body);
                         resolve(body);
                     } else {
-                        reject(res);
+                        reject(res.statusMessage);
+                    }
+                });
+        });
+    }
+
+    /**
+     *
+     * @param {string} intentName
+     * @param {string[]} utterance
+     */
+    loadUtterance(intentName, utterance) {
+        let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/versions/0.1/examples';
+
+        console.log(requestURL);
+
+        return new Promise((resolve, reject) => {
+            let utteranceArray = []
+            utterance.forEach((e, i) => {
+                utteranceArray.push({
+                    'intentName': intentName,
+                    text: e,
+                    entityLabels: []
+                });
+            });
+            request.post({
+                url: requestURL,
+                qs: {
+                    'subscription-key': config.LUIS_API_KEY
+                },
+                json: utteranceArray
+            },
+                (err, res, body) => {
+                    if (res.statusCode == 201) {
+                        console.log('Response: ' + res.body);
+                        resolve(body);
+                    } else {
+                        console.log(utteranceArray);
+                        reject(res.statusMessage);
                     }
                 });
         });
     }
 }
 
-function checkIntent(intentName) {
-
-}
 module.exports = NLP;
