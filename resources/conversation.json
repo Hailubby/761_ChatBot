@@ -1,9 +1,10 @@
 [
   {
     "ID": "0",
-    "Key": "^(?=.*\\bgoals?\\b.*).*$",
-    "Bot Response": "Need help setting some goals?",
-    "Response Type": "String",
+    "Key": "goals",
+    "Type": "Message;Buttons",
+    "Message": "Need help setting some goals?",
+    "Buttons": "Yes;No",
     "Follow Ups": "0;1"
   }
 ]
