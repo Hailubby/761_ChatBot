@@ -28,9 +28,10 @@ if (shouldLoad('CONVERSATION')) {
     
     console.log('ADDING NEW STORAGE KEYS...');
     let StoreKeys = require('./util/storage/StoreKeys');
+    const TYPES = require('./util/commands/ResponseTypes');
     for (let i = 0; i < conversationJSON.length; i++) {
         const msgProto = conversationJSON[i];
-        let stores = msgProto['Store'];
+        let stores = msgProto[TYPES.STORE];
         if (stores) {
             stores = stores.split(';');
             stores.forEach( key => {
@@ -43,7 +44,7 @@ if (shouldLoad('CONVERSATION')) {
     }
     for (let i = 0; i < followUpJSON.length; i++) {
         const msgProto = followUpJSON[i];
-        let stores = msgProto['Store'];
+        let stores = msgProto[TYPES.STORE];
         if (stores) {
             stores = stores.split(';');
             stores.forEach( key => {

@@ -4,19 +4,8 @@ const StoreKeys = require('../storage/StoreKeys');
 const builder = require('botbuilder');
 const config = require('../../../config.json');
 
-const PROPERTIES = {
-  ID: 'ID',
-  KEY: 'Key',
-  TYPE: 'Type',
-  FOLLOWUPS: 'Follow Ups',
-};
-
-const TYPES = {
-  MESSAGE: 'Message',
-  BUTTONS: 'Buttons',
-  STORE: 'Store',
-  RECALL: 'Recall'
-};
+const PROPERTIES = requires('./CommandProperties');
+const TYPES = requires('./ResponseTypes');
 
 /**
  * Loads sets of commands based on modules specified in config.json.
