@@ -18,6 +18,10 @@ class Logger {
     log(senderId, text, sendRec) {
         this.logger.log(senderId, text, sendRec);
     }
+    
+    logUserData(senderId, userDataType, value){
+        this.logger.logUserData(senderId, userDataType, value);
+    }
 }
 
 module.exports = Logger;
