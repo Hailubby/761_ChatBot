@@ -22,5 +22,12 @@
     "Message": "Do you need some ideas to help you relax?",
     "Buttons": "Yes;No",
     "Follow Ups": "19;20"
+  },
+  {
+    "ID": "3",
+    "Key": "recall goals",
+    "Type": "Message;Recall",
+    "Message": "Your goal was: [Goals]",
+    "Recall": "Goals"
   }
 ]

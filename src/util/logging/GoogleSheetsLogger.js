@@ -4,7 +4,7 @@ const config = require('../../../config.json');
 
 /**
  * A logger that logs to a google sheet workbook.
- * 
+ *
  * Workbook belongs to spgettibot goolge account.
  */
 class GoogleSheetsLogger {
@@ -20,7 +20,7 @@ class GoogleSheetsLogger {
 
   /**
    * Writes a log to the Google Sheet log workbook.
-   * 
+   *
    * @param {string} senderId The id of the message sender
    * @param {string} text The text sent
    * @param {string} label Label of the log (eg. send, receive)
@@ -38,7 +38,6 @@ class GoogleSheetsLogger {
         values: [[label, text, new Date(Date.now()).toString()]]
       }
     };
-
     this.sheets.spreadsheets.values.append(req, (err, response) => {
       if (err) {
         // need to be able make the sheet if the error message says that

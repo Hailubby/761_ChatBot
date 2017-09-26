@@ -2,8 +2,9 @@
   {
     "ID": "0",
     "Key": "yes",
-    "Type": "Message",
+    "Type": "Message;Store",
     "Message": "Great, there's lots of benefits by not gambling.  Some benefits are getting out of debt, improving relationships, feeling healthier and less stressed, feeling better about yourself.  What do you see as your benefits by stopping gambling?",
+    "Store": "Benefits",
     "Follow Ups": "2"
   },
   {
@@ -36,8 +37,9 @@
   {
     "ID": "5",
     "Key": "yes",
-    "Type": "Message",
-    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve"
+    "Type": "Message;Store",
+    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve",
+    "Store": "Goals"
   },
   {
     "ID": "6",
@@ -48,7 +50,7 @@
   {
     "ID": "7",
     "Type": "Message",
-    "Message": "echo"
+    "Message": "I'll hold you to that goal!"
   },
   {
     "ID": "8",
