@@ -36,10 +36,9 @@ if (shouldLoad('CONVERSATION')) {
             stores = stores.split(';');
             stores.forEach( key => {
                 if (!StoreKeys.Keys.includes(key)) {
-                    console.info('new key' + key);
                     StoreKeys.Keys.push(key);
                 }
-            })
+            });
         }
     }
     for (let i = 0; i < followUpJSON.length; i++) {
@@ -51,7 +50,7 @@ if (shouldLoad('CONVERSATION')) {
                 if (!StoreKeys.Keys.includes(key)) {
                     StoreKeys.Keys.push(key);
                 }
-            })
+            });
         }
     }
     fs.writeFileSync(

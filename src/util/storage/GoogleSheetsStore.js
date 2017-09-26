@@ -37,7 +37,7 @@ class GoogleSheetsStore {
       resource: {
         range: `${id}!E${key}:F${key}`,
         majorDimension: 'ROWS',
-        values: [[StoreKeys[key], value]]
+        values: [[StoreKeys.Keys[key], value]]
       }
     };
     this.sheets.spreadsheets.values.update(req, (err, res) => {
