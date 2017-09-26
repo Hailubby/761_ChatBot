@@ -107,6 +107,14 @@ class CommandLoader {
         );
       }
 
+      if (types.includes(TYPES.IMAGE)) {
+        msg.addAttachment({
+          ContentUrl: 'https://cdn.glitch.com/00ecfa44-32b0-4a79-a2a1-06d87dc60204%2Ftest_image.jpg?1506466359543',
+          ContentType: 'image/jpg',
+          Name: 'Hardcoded'
+        });
+      }
+
       // Store input if response stores input
       if (types.includes(TYPES.STORE)) {
         let key = StoreKeys.Keys.indexOf(msgProto[TYPES.STORE]);
