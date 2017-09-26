@@ -39,7 +39,7 @@ class Bot {
     this.app.post('/webhook', this.connector.listen());
 
     const server = this.app.listen(3000, () => {
-      console.log(`Listening on port ${server.address().port}`);
+      console.info(`Listening on port ${server.address().port}`);
     });
 
     // Receive messages from the user
@@ -58,7 +58,6 @@ class Bot {
 
   match(session, intent){
     let responded = false;
-    // console.log(intent);
 
     // Check if message should be responded to by a mid-level conversation thread followup
     if (this.userFollowups[session.message.user.id]){

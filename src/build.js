@@ -12,7 +12,7 @@ function shouldLoad(module) {
 
 const converter = new ExcelConverter();
 if (shouldLoad('CONVERSATION')) {
-    console.log('BUILDING CONVERSATIONS...');
+    console.info('BUILDING CONVERSATIONS...');
 
     const conversationJSON = converter.convert('CONVERSATION');
     fs.writeFileSync(
@@ -26,7 +26,7 @@ if (shouldLoad('CONVERSATION')) {
         JSON.stringify(followUpJSON, null, 2)
     );
 
-    console.log('ADDING NEW STORAGE KEYS...');
+    console.info('ADDING NEW STORAGE KEYS...');
     let StoreKeys = require('./util/storage/StoreKeys');
     const TYPES = require('./util/commands/ResponseTypes');
     for (let i = 0; i < conversationJSON.length; i++) {
@@ -61,4 +61,4 @@ if (shouldLoad('CONVERSATION')) {
 
 
 
-console.log('BUILD COMPLETED');
+console.info('BUILD COMPLETED');
