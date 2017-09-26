@@ -29,5 +29,12 @@
     "Type": "Message;Recall",
     "Message": "Your goal was: [Goals]",
     "Recall": "Goals"
+  },
+  {
+    "ID": "4",
+    "Key": "link",
+    "Type": "Message;Link",
+    "Message": "Try these links for help",
+    "Link": "https://www.choicenotchance.org.nz/"
   }
 ]
