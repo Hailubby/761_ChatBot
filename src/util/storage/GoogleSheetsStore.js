@@ -20,10 +20,12 @@ class GoogleSheetsStore {
   }
 
   /**
+   * Writes data *value* belonging to provided *id* and *key* to GoogleSheets.
+   * NOTE: Sheet access specified in config.json
    *
-   * @param {*} id
-   * @param {*} key
-   * @param {*} value
+   * @param {string} id
+   * @param {string} key
+   * @param {string} value
    */
   write(id, key, value) {
     StoreKeys = require('./StoreKeys');
@@ -46,9 +48,11 @@ class GoogleSheetsStore {
   }
 
   /**
+   * Reads data belonging to provided *key* and *value* from GoogleSheets.
+   * NOTE: Sheet access specified in config.json
    *
-   * @param {*} id
-   * @param {*} key
+   * @param {string} id
+   * @param {string} key
    */
   read(id, key) {
     StoreKeys = require('./StoreKeys');
@@ -58,15 +62,14 @@ class GoogleSheetsStore {
           spreadsheetId: config.GOOGLE_LOGGING_BOOK,
           range: `${id}!E${key}:F${key}`
         };
-        
+
         this.sheets.spreadsheets.values.get(req, (err, res) => {
             if (err){
                 reject(err);
             }
             resolve(res.values[0][1]);
         });
-    })
-    
+    });
   }
 }
 
