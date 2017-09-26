@@ -4,8 +4,8 @@ const StoreKeys = require('../storage/StoreKeys');
 const builder = require('botbuilder');
 const config = require('../../../config.json');
 
-const PROPERTIES = requires('./CommandProperties');
-const TYPES = requires('./ResponseTypes');
+const PROPERTIES = require('./CommandProperties');
+const TYPES = require('./ResponseTypes');
 
 /**
  * Loads sets of commands based on modules specified in config.json.
@@ -112,7 +112,7 @@ class CommandLoader {
         let key = StoreKeys.Keys.indexOf(msgProto[TYPES.STORE]);
         this.store.write(session.message.user.id, key, session.message.text);
       }
-      
+
       if (types.includes(TYPES.RECALL)) {
         sendable = false;
         let key = StoreKeys.Keys.indexOf(msgProto[TYPES.RECALL]);
@@ -129,7 +129,7 @@ class CommandLoader {
       // TODO This will create race conditions with multiple asyncs
       if (sendable) {
         session.send(msg);
-      }      
+      }
     });
     /* eslint-enable max-statements */
   }
