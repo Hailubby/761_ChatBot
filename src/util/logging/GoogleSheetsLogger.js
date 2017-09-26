@@ -45,7 +45,7 @@ class GoogleSheetsLogger {
         // eslint-disable-next-line eqeqeq
         if (err.code == 400) {
           this.makeSheet(senderId);
-          this.log(senderId, text, label);
+          this.log(senderId, text, abel);
         }
       }
     });
@@ -73,7 +73,7 @@ class GoogleSheetsLogger {
 
     this.sheets.spreadsheets.batchUpdate(req, (err, response) => {
       if (err) {
-        console.error(err);
+        console.error('If this error says:', '"Invalid requests[0].addSheet: Sheet already exists. Please enter another name." then ignore it\n', err);
         return;
       }
     });
