@@ -25,7 +25,7 @@ if (shouldLoad('CONVERSATION')) {
         `${__dirname}/../resources/followup.json`,
         JSON.stringify(followUpJSON, null, 2)
     );
-    
+
     console.log('ADDING NEW STORAGE KEYS...');
     let StoreKeys = require('./util/storage/StoreKeys');
     const TYPES = require('./util/commands/ResponseTypes');
@@ -36,10 +36,9 @@ if (shouldLoad('CONVERSATION')) {
             stores = stores.split(';');
             stores.forEach( key => {
                 if (!StoreKeys.Keys.includes(key)) {
-                    console.log('new key' + key);
                     StoreKeys.Keys.push(key);
                 }
-            })
+            });
         }
     }
     for (let i = 0; i < followUpJSON.length; i++) {
@@ -51,7 +50,7 @@ if (shouldLoad('CONVERSATION')) {
                 if (!StoreKeys.Keys.includes(key)) {
                     StoreKeys.Keys.push(key);
                 }
-            })
+            });
         }
     }
     fs.writeFileSync(
