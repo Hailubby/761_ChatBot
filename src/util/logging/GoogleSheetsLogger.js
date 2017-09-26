@@ -76,7 +76,7 @@ class GoogleSheetsLogger {
                 // sheet does not exist.
                 // eslint-disable-next-line eqeqeq
                 if (err.code == 400) {
-                    console.log(err);
+
                     // this.makeSheet(sheetId);
                     // this.append(sheetId, values);
                 }
@@ -115,7 +115,7 @@ class GoogleSheetsLogger {
             } else {
                 this.addToToc(senderId, response.replies[0].addSheet.properties.sheetId);
             }
-            console.log(response);
+
         });
     }
     /**
@@ -125,7 +125,7 @@ class GoogleSheetsLogger {
     * @param {string} sheetGid
     */
     addToToc(senderId, sheetGid) {
-        console.log('SENDERID:', senderId);
+
         let sheetUrl = config.GOOGLE_TOC_BASE_URL + sheetGid;
         this.append(config.GOGGLE_TOC_SHEETNAME, [senderId, sheetUrl]);
     }
