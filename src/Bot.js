@@ -1,5 +1,4 @@
 const Logger = require('./util/logging/Logger.js');
-const UserData = require('./util/logging/UserData.js');
 const builder = require('botbuilder');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -14,7 +13,6 @@ class Bot {
     this.commands = [];
     // Logger
     this.logger = new Logger();
-    this.userData = new UserData();
 
     this.app = express();
     this.app.use(bodyParser.json());
@@ -47,7 +45,6 @@ class Bot {
     // Receive messages from the user
     this.bot = new builder.UniversalBot(this.connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive');
-      this.logger.logUserData(session.message.user.id, this.userData.values.GOAL, 'i wanna keep my money');
 
       this.nlp.processMessage(session).then(intent => {
         this.match(session, intent);

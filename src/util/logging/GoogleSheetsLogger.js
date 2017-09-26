@@ -4,7 +4,7 @@ const config = require('../../../config.json');
 
 /**
  * A logger that logs to a google sheet workbook.
- * 
+ *
  * Workbook belongs to spgettibot goolge account.
  */
 class GoogleSheetsLogger {
@@ -16,15 +16,11 @@ class GoogleSheetsLogger {
     this.googleAuth = new GoogleAuth();
     this.auth = new this.googleAuth.OAuth2(this.clientId, this.clientSecret, this.redirectUrl);
     this.auth.credentials = config.GOOGLE_SHEET_AUTH;
-    this.userData = {
-        1 : 'Goal',
-        2 : 'Name'
-    }
   }
 
   /**
    * Writes a log to the Google Sheet log workbook.
-   * 
+   *
    * @param {string} senderId The id of the message sender
    * @param {string} text The text sent
    * @param {string} label Label of the log (eg. send, receive)
@@ -79,33 +75,6 @@ class GoogleSheetsLogger {
       if (err) {
         console.error(err);
         return;
-      }
-    });
-  }
-  
-  logUserData(senderId, userDataType, value){
-      const req = {
-      auth: this.auth,
-      spreadsheetId: config.GOOGLE_LOGGING_BOOK,
-      range: `${senderId}!E${userDataType}:F${userDataType}`,
-      valueInputOption: 'RAW',
-      resource: {
-        range: `${senderId}!E${userDataType}:F${userDataType}`,
-        majorDimension: 'ROWS',
-        values: [[this.userData[userDataType], value]]
-      }
-    };
-    console.log(req);
-    this.sheets.spreadsheets.values.update(req, (err, response) => {
-      if (err) {
-        // need to be able make the sheet if the error message says that
-        // sheet does not exist.
-        // eslint-disable-next-line eqeqeq
-        if (err.code == 400) {
-          console.log(err);
-          /*this.makeSheet(senderId);
-          this.logUserData(senderId, userDataType, value);*/
-        }
       }
     });
   }
