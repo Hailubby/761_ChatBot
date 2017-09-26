@@ -38,12 +38,16 @@ class Bot {
     // Listen for messages from users
     this.app.post('/webhook', this.connector.listen());
 
+    // Listen for messages from SPGeTTi application
+    this.app.post('/appwebhook', (req, res) => {
+    functionName.call(this, req, res);
+    }); 
+
     const server = this.app.listen(3000, () => {
       console.log(`Listening on port ${server.address().port}`);
     });
 
-    // Receive messages from the user
-    this.bot = new builder.UniversalBot(this.connector, session => {
+      this.bot = new builder.UniversalBot(this.connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive');
 
       this.nlp.processMessage(session).then(intent => {
@@ -95,6 +99,33 @@ class Bot {
   load(commands) {
     this.commands.push.apply(this.commands, commands);
   }
+}
+
+function sendProactiveMessage(address) {
+  let msg = new builder.Message().address(address);
+  msg.text('This is a proactive message');
+  msg.textLocale('en-US');
+  this.bot.send(msg);
+}
+
+function functionName(req, res) {
+  let userId = req.body.user_id;
+  let messageContent = req.body.message;
+  
+  let address = {
+  channelId: 'facebook',
+  user: {
+    id: '1450695101674286',
+  },
+  bot: {
+    id: '513268699012224',
+    name: 'spgetti'
+  },
+  serviceUrl: 'https://facebook.botframework.com'
+  }
+
+  sendProactiveMessage.call(this, address);
+  console.log('Finished sending proactive message');
 }
 
 module.exports = Bot;
