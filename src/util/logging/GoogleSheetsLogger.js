@@ -145,7 +145,7 @@ class GoogleSheetsLogger {
       readReq = {
         auth: this.auth,
         spreadsheetId: config.GOOGLE_LOGGING_BOOK,
-        range: range
+        range: range,
       },
       writeReq = {
         auth: this.auth,
@@ -160,7 +160,7 @@ class GoogleSheetsLogger {
 
     //update no. of users
     this.overviewQ.push(readReq, val => {
-      val++;
+      val += 1;
       writeReq.resource.values = [[val]];
       this.sheets.spreadsheets.values.update(writeReq,
         (err, res) => {
@@ -174,51 +174,8 @@ class GoogleSheetsLogger {
   /**
    * Update the total summation of all the goals of all the users.
    */
-  overviewAddGoal(id) {
-    let GSS = require('../storage/GoogleSheetsStore');
-    let range = 'Overview!B2:B2',
-      uReadReq = {
-        auth: this.auth,
-        spreadsheetId: config.GOOGLE_LOGGING_BOOK,
-        // Using the Enum made in StoreKey we only grab the value of Goals.
-        range: `${id}!F1:F1`
-      },
-      readReq = {
-        auth: this.auth,
-        spreadsheetId: config.GOOGLE_LOGGING_BOOK,
-        range: range
-      },
-      writeReq = {
-        auth: this.auth,
-        spreadsheetId: config.GOOGLE_LOGGING_BOOK,
-        range: range,
-        valueInputOption: 'RAW',
-        resource: {
-          range: range,
-          majorDimension: 'ROWS'
-        }
-      };
-    // Read a users goal and cheque if a user has a goal set.
-    this.overviewQ.push(uReadReq,
-      val => {
-        if (val === null | undefined | '') {
-          // If the user has no goal before hand that means we need to
-          // incriment the number of goals.
-          this.sheets.spreadsheets.values.get(readReq, (err, res) => {
-            if (err) {
-              throw err;
-            }
-            let goalNo = res.values[0][0];
-            goalNo++;
-            this.sheets.spreadsheets.values.update(req,
-              (err, res) => {
-                if (err) {
-                  throw err;
-                }
-              });
-          });
-        }
-      });
+  overviewAddGoal() {
+    //read value
     //update
   }
 }
