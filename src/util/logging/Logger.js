@@ -16,7 +16,19 @@ class Logger {
    * @param {string} label Label of the log (eg. send, receive)
    */
     log(senderId, text, sendRec) {
-        this.logger.log(senderId, text, sendRec);
+        return this.logger.log(senderId, text, sendRec);
+    }
+
+    /**
+     * Make the log for a user.
+     *
+     * @param {string} senderId
+     * @param {string} senderName
+     */
+    init(senderId, senderName){
+      return this.logger.makeSheet(senderId, senderName).then(sheetId => {
+        this.logger.addToToc(senderId, senderName, sheetId);
+      });
     }
 }
 

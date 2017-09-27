@@ -31,8 +31,8 @@ class Bot {
   run() {
     // Create chat connector for communicating with the Bot Framework Service
     this.connector = new builder.ChatConnector({
-        appId: config.MICROSOFT_APP_ID,
-        appPassword: config.MICROSOFT_APP_PASSWORD
+      appId: config.MICROSOFT_APP_ID,
+      appPassword: config.MICROSOFT_APP_PASSWORD
     });
 
     // Listen for messages from users
@@ -44,7 +44,12 @@ class Bot {
 
     // Receive messages from the user
     this.bot = new builder.UniversalBot(this.connector, session => {
-      this.logger.log(session.message.user.id, session.message.text, 'receive');
+      this.logger.log(session.message.user.id, session.message.text, 'receive').catch(err => {
+        this.logger.init(session.message.user.id, session.message.user.name)
+          .then(() => {
+            this.logger.log(session.message.user.id, session.message.text, 'receive');
+          });
+      });
 
       this.nlp.processMessage(session).then(intent => {
         this.match(session, intent);
@@ -56,13 +61,13 @@ class Bot {
     });
   }
 
-  match(session, intent){
+  match(session, intent) {
     let responded = false;
 
     // Check if message should be responded to by a mid-level conversation thread followup
-    if (this.userFollowups[session.message.user.id]){
+    if (this.userFollowups[session.message.user.id]) {
       this.userFollowups[session.message.user.id].every(command => {
-        if (command.match(intent)){
+        if (command.match(intent)) {
           command.respond(session);
           this.userFollowups[session.message.user.id] = command.followup;
           responded = true;
@@ -73,9 +78,9 @@ class Bot {
     }
 
     // If message has not been responded to, attempt to find a top level response
-    if (!responded){
+    if (!responded) {
       this.commands.every(command => {
-        if (command.match(intent)){
+        if (command.match(intent)) {
           console.error('in');
           command.respond(session);
           this.userFollowups[session.message.user.id] = command.followup;
