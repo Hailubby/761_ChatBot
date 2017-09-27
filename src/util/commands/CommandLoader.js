@@ -88,7 +88,7 @@ class CommandLoader {
       );
 
       let sendable = true;
-      const adaptive = types.includes(TYPES.LINK || TYPES.IMAGE);
+      const adaptive = types.includes(TYPES.LINK) || types.includes(TYPES.IMAGE);
       const msg = new builder.Message(session);
       let attachment = {
         contentType: 'application/vnd.microsoft.card.adaptive',
