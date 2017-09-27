@@ -40,7 +40,9 @@ class Bot {
 
     // Listen for messages from SPGeTTi application
     this.app.post('/appwebhook', (req, res) => {
-    functionName.call(this, req, res);
+    sendProactiveMessage.call(this, req, res);
+
+
     }); 
 
     const server = this.app.listen(3000, () => {
@@ -101,21 +103,14 @@ class Bot {
   }
 }
 
-function sendProactiveMessage(address) {
-  let msg = new builder.Message().address(address);
-  msg.text('This is a proactive message');
-  msg.textLocale('en-US');
-  this.bot.send(msg);
-}
-
-function functionName(req, res) {
+function sendProactiveMessage(req, res) {
   let userId = req.body.user_id;
   let messageContent = req.body.message;
   
   let address = {
   channelId: 'facebook',
   user: {
-    id: '1450695101674286',
+    id: userId,
   },
   bot: {
     id: '513268699012224',
@@ -124,8 +119,15 @@ function functionName(req, res) {
   serviceUrl: 'https://facebook.botframework.com'
   }
 
+  let msg = new builder.Message().address(address);
+  msg.text(messageContent);
+  msg.textLocale('en-US');
+  this.bot.send(msg);
+
   sendProactiveMessage.call(this, address);
   console.log('Finished sending proactive message');
+
+  res.send('Ok');
 }
 
 module.exports = Bot;
