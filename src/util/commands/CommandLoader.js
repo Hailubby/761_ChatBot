@@ -131,6 +131,10 @@ class CommandLoader {
         });
       }
 
+      if (types.includes(TYPES.LINK)) {
+        msg.addAttachment(builder.CardAction.openUrl(msgProto[TYPES.LINK]));
+      }
+
       // Store input if response stores input
       if (types.includes(TYPES.STORE)) {
         let key = StoreKeys.Keys.indexOf(msgProto[TYPES.STORE]);
