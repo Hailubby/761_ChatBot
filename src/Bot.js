@@ -44,12 +44,13 @@ class Bot {
 
     // Receive messages from the user
     this.bot = new builder.UniversalBot(this.connector, session => {
-      this.logger.log(session.message.user.id, session.message.text, 'receive').catch(err => {
-        this.logger.init(session.message.user.id, session.message.user.name)
-          .then(() => {
-            this.logger.log(session.message.user.id, session.message.text, 'receive');
-          });
-      });
+      this.logger.log(session.message.user.id, session.message.text, 'receive')
+        .catch(err => {
+          this.logger.init(session.message.user.id, session.message.user.name)
+            .then(() => {
+              this.logger.log(session.message.user.id, session.message.text, 'receive');
+            });
+        });
 
       this.nlp.processMessage(session).then(intent => {
         this.match(session, intent);

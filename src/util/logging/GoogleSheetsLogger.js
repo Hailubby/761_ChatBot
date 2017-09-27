@@ -80,6 +80,7 @@ class GoogleSheetsLogger {
    * Make an individual sheet in the workbook for a new user log.
    *
    * @param {string} senderId The id of the message sender
+   * @param {string} senderName Facebook username
    */
   makeSheet(senderId, senderName) {
     let req = {
@@ -110,7 +111,7 @@ class GoogleSheetsLogger {
 
 
   /**
-  * Add a link to the other sheets in the workbook to the ToC.
+  * Add a link to the other sheets in the workbook to the Table of contents.
   *
   * @param {string} senderId
   * @param {string} sheetGid
