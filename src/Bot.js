@@ -38,11 +38,12 @@ class Bot {
     // Listen for messages from users
     this.app.post('/webhook', this.connector.listen());
 
-    // Listen for messages from SPGeTTi application
+    // Listen for messages from SPGeTTi application to send to users
     this.app.post('/appwebhook', (req, res) => {
-    sendProactiveMessage.call(this, req, res);
+        sendProactiveMessage.call(this, req, res);
 
-
+        //Send 'successfully sent' message to sender
+        res.send('Successfully sent a message to Facebook user');
     }); 
 
     const server = this.app.listen(3000, () => {
@@ -103,6 +104,10 @@ class Bot {
   }
 }
 
+/**
+ * Send a message that will be sent to a specific user, as specified by their Facebook ID (user_id)
+ * @param {*} req  The HTTP request containing Facebook user ID to send message to (in user_id) and message content (in message)
+ */
 function sendProactiveMessage(req, res) {
   let userId = req.body.user_id;
   let messageContent = req.body.message;
@@ -110,7 +115,7 @@ function sendProactiveMessage(req, res) {
   let address = {
   channelId: 'facebook',
   user: {
-    id: userId,
+    id: userId
   },
   bot: {
     id: '513268699012224',
@@ -123,11 +128,6 @@ function sendProactiveMessage(req, res) {
   msg.text(messageContent);
   msg.textLocale('en-US');
   this.bot.send(msg);
-
-  sendProactiveMessage.call(this, address);
-  console.log('Finished sending proactive message');
-
-  res.send('Ok');
 }
 
 module.exports = Bot;
