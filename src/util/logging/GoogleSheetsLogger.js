@@ -1,6 +1,7 @@
 const google = require('googleapis');
 const GoogleAuth = require('google-auth-library');
 const config = require('../../../config.json');
+const async = require('async');
 
 /**
  * A logger that logs to a google sheet workbook.
@@ -16,6 +17,21 @@ class GoogleSheetsLogger {
     this.googleAuth = new GoogleAuth();
     this.auth = new this.googleAuth.OAuth2(this.clientId, this.clientSecret, this.redirectUrl);
     this.auth.credentials = config.GOOGLE_SHEET_AUTH;
+    this.overviewQ = async.queue((task, callback) => {
+      // get google sheet request then read current value
+      let sheetCall = new Promise((resolve, reject) => {
+        this.sheets.spreadsheets.values.get(task, (err, res) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(res.values[0][0]);
+        });
+      });
+      // Write to the sheet
+      sheetCall.then(val => {
+        callback.call(this, val);
+      });
+    }, 1);
   }
 
   /**
@@ -109,7 +125,6 @@ class GoogleSheetsLogger {
     });
   }
 
-
   /**
   * Add a link to the other sheets in the workbook to the Table of contents.
   *
@@ -119,6 +134,49 @@ class GoogleSheetsLogger {
   addToToc(senderId, senderName, sheetGid) {
     let sheetUrl = config.GOOGLE_TOC_BASE_URL + sheetGid;
     this.append(config.GOGGLE_TOC_SHEETNAME, [senderId, senderName, sheetUrl]);
+  }
+
+  /**
+   * Update user value in Overview sheet.
+   */
+  overviewAddUser() {
+    //read value
+    let range = 'Overview!A2:A2',
+      readReq = {
+        auth: this.auth,
+        spreadsheetId: config.GOOGLE_LOGGING_BOOK,
+        range: range,
+      },
+      writeReq = {
+        auth: this.auth,
+        spreadsheetId: config.GOOGLE_LOGGING_BOOK,
+        range: range,
+        valueInputOption: 'RAW',
+        resource: {
+          range: range,
+          majorDimension: 'ROWS'
+        }
+      };
+
+    //update no. of users
+    this.overviewQ.push(readReq, val => {
+      val += 1;
+      writeReq.resource.values = [[val]];
+      this.sheets.spreadsheets.values.update(writeReq,
+        (err, res) => {
+          if (err) {
+            throw err;
+          }
+        });
+    });
+  }
+
+  /**
+   * Update the total summation of all the goals of all the users.
+   */
+  overviewAddGoal() {
+    //read value
+    //update
   }
 }
 
