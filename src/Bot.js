@@ -40,10 +40,15 @@ class Bot {
 
     // Listen for messages from SPGeTTi application to send to users
     this.app.post('/appwebhook', (req, res) => {
-        sendProactiveMessage.call(this, req, res);
+        try{
+          sendProactiveMessage.call(this, req);
 
-        //Send 'successfully sent' message to sender
-        res.send('Successfully sent a message to Facebook user');
+           //Send 'successfully sent' message to sender
+          res.send('Successfully sent a message to Facebook user');
+        } catch (e){
+          res.send(e.body);
+        }
+        
     }); 
 
     const server = this.app.listen(3000, () => {
@@ -107,7 +112,12 @@ class Bot {
  * Send a message that will be sent to a specific user, as specified by their Facebook ID (user_id)
  * @param {*} req  The HTTP request containing Facebook user ID to send message to (in user_id) and message content (in message)
  */
-function sendProactiveMessage(req, res) {
+function sendProactiveMessage(req) {
+
+  if (!req.body.user_id || !req.body.message) {
+    throw 'MissingParameterException';
+  }
+
   let userId = req.body.user_id;
   let messageContent = req.body.message;
   
