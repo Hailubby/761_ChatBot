@@ -14,9 +14,10 @@
   },
   {
     "ID": "2",
-    "Type": "Message;Buttons",
+    "Type": "Message;Buttons;Store",
     "Message": "Great, so to achieve that, do you want to stop all gambling?",
     "Buttons": "Yes;No",
+    "Store": "Benefits",
     "Follow Ups": "3;4"
   },
   {
@@ -37,7 +38,8 @@
     "ID": "5",
     "Key": "yes",
     "Type": "Message",
-    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve"
+    "Message": "Try to limit how many days you go gambling, or set a maximum amount you can spend.  Take some time now to write down what you want to achieve",
+    "Follow Ups": "7"
   },
   {
     "ID": "6",
@@ -47,8 +49,9 @@
   },
   {
     "ID": "7",
-    "Type": "Message",
-    "Message": "echo"
+    "Type": "Message;Store",
+    "Message": "I'll hold you to that goal!",
+    "Store": "Goals"
   },
   {
     "ID": "8",

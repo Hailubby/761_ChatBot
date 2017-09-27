@@ -4,7 +4,7 @@ const config = require('../../../config.json');
 
 /**
  * A logger that logs to a google sheet workbook.
- * 
+ *
  * Workbook belongs to spgettibot goolge account.
  */
 class GoogleSheetsLogger {
@@ -20,7 +20,7 @@ class GoogleSheetsLogger {
 
   /**
    * Writes a log to the Google Sheet log workbook.
-   * 
+   *
    * @param {string} senderId The id of the message sender
    * @param {string} text The text sent
    * @param {string} label Label of the log (eg. send, receive)
@@ -38,7 +38,6 @@ class GoogleSheetsLogger {
         values: [[label, text, new Date(Date.now()).toString()]]
       }
     };
-
     this.sheets.spreadsheets.values.append(req, (err, response) => {
       if (err) {
         // need to be able make the sheet if the error message says that
@@ -51,6 +50,29 @@ class GoogleSheetsLogger {
       }
     });
   }
+
+  /**
+   * Generic append method.
+   *
+   * @param {string} sheetId
+   * @param {string[]} values
+   */
+  append(sheetId, values = []) {
+    const req = {
+      auth: this.auth,
+      spreadsheetId: config.GOOGLE_LOGGING_BOOK,
+      range: `${sheetId}!A1:A${values.length}`,
+      valueInputOption: 'RAW',
+      insertDataOption: 'INSERT_ROWS',
+      resource: {
+        range: `${sheetId}!A1:A${values.length}`,
+        majorDimension: 'ROWS',
+        values: [values]
+      }
+    };
+    this.sheets.spreadsheets.values.append(req);
+  }
+
 
   /**
    * Make an individual sheet in the workbook for a new user log.
@@ -74,10 +96,27 @@ class GoogleSheetsLogger {
 
     this.sheets.spreadsheets.batchUpdate(req, (err, response) => {
       if (err) {
-        console.error(err);
+        console.error('If this error says:',
+          '"Invalid requests[0].addSheet: Sheet already exists. Please enter another name."',
+          ' then ignore it\n',
+          err);
         return;
+      } else {
+        this.addToToc(senderId, response.replies[0].addSheet.properties.sheetId);
       }
+
     });
+  }
+  /**
+  * Add a link to the other sheets in the workbook to the ToC.
+  *
+  * @param {string} senderId
+  * @param {string} sheetGid
+  */
+  addToToc(senderId, sheetGid) {
+
+    let sheetUrl = config.GOOGLE_TOC_BASE_URL + sheetGid;
+    this.append(config.GOGGLE_TOC_SHEETNAME, [senderId, sheetUrl]);
   }
 }
 

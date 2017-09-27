@@ -10,7 +10,7 @@ class Logger {
 
   /**
    * Writes a log.
-   * 
+   *
    * @param {string} senderId The id of the message sender
    * @param {string} text The text sent
    * @param {string} label Label of the log (eg. send, receive)
