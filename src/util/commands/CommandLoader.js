@@ -93,7 +93,9 @@ class CommandLoader {
       let attachment = {
         contentType: 'application/vnd.microsoft.card.adaptive',
         content: {
+          $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
           type: 'AdaptiveCard',
+          version: '1.0',
           body: []
         }
       };
@@ -101,7 +103,7 @@ class CommandLoader {
       // Add message if response includes a message (text)
       if (types.includes(TYPES.MESSAGE)) {
         if (adaptive) {
-          attachment.body.push({
+          attachment.content.body.push({
             type: 'TextBlock',
             text: msgProto[TYPES.MESSAGE]
           });
@@ -124,15 +126,19 @@ class CommandLoader {
       }
 
       if (types.includes(TYPES.IMAGE)) {
-        msg.addAttachment({
-          ContentUrl: 'https://cdn.glitch.com/00ecfa44-32b0-4a79-a2a1-06d87dc60204%2Ftest_image.jpg?1506466359543',
-          ContentType: 'image/jpg',
-          Name: 'Hardcoded'
+        attachment.content.body.push({
+          type: 'Image',
+          url: msgProto[TYPES.IMAGE]
         });
       }
 
       if (types.includes(TYPES.LINK)) {
-        msg.addAttachment(builder.CardAction.openUrl(msgProto[TYPES.LINK]));
+        attachment.content.actions = [];
+        attachment.content.actions.push({
+          type: 'Action.OpenUrl',
+          title: 'View',
+          url: msgProto[TYPES.LINK]
+        });
       }
 
       // Store input if response stores input
@@ -148,7 +154,15 @@ class CommandLoader {
         .then(value => {
           let text = msgProto[TYPES.MESSAGE];
           text = text.replace(`[${msgProto[TYPES.RECALL]}]`, value);
-          msg.text(text);
+          if (adaptive) {
+            attachment.content.body.push({
+              type: 'TextBlock',
+              text: text
+            });
+            msg.addAttachment(attachment);
+          } else {
+            msg.text(text);
+          }
           session.send(msg);
         });
       }
@@ -156,6 +170,9 @@ class CommandLoader {
       // Only send if async tasks are not constructing message
       // TODO This will create race conditions with multiple asyncs
       if (sendable) {
+        if (adaptive) {
+          msg.addAttachment(attachment);
+        }
         session.send(msg);
       }
     });
