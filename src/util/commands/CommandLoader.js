@@ -105,7 +105,8 @@ class CommandLoader {
         if (adaptive) {
           attachment.content.body.push({
             type: 'TextBlock',
-            text: msgProto[TYPES.MESSAGE]
+            text: msgProto[TYPES.MESSAGE],
+            size: 'large'
           });
         } else {
           msg.text(msgProto[TYPES.MESSAGE]);
@@ -133,11 +134,13 @@ class CommandLoader {
       }
 
       if (types.includes(TYPES.LINK)) {
+        let url = msgProto[TYPES.LINK].split(';').slice(1).join(';');
+        let title = msgProto[TYPES.LINK].split(';')[0];
         attachment.content.actions = [];
         attachment.content.actions.push({
           type: 'Action.OpenUrl',
-          title: 'View',
-          url: msgProto[TYPES.LINK]
+          title: title,
+          url: url
         });
       }
 
@@ -157,7 +160,8 @@ class CommandLoader {
           if (adaptive) {
             attachment.content.body.push({
               type: 'TextBlock',
-              text: text
+              text: text,
+              size: 'large'
             });
             msg.addAttachment(attachment);
           } else {

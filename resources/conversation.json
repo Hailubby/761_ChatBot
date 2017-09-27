@@ -35,13 +35,14 @@
     "Key": "image",
     "Type": "Message;Image",
     "Message": "Try looking at this image for help",
-    "Image": "https://cdn.glitch.com/00ecfa44-32b0-4a79-a2a1-06d87dc60204%2Ftest_image.jpg?1506466359543"
+    "Image": "https://cdn.glitch.com/00ecfa44-32b0-4a79-a2a1-06d87dc60204%2Ftest_image.jpg"
   },
   {
     "ID": "5",
     "Key": "link",
-    "Type": "Message;Link",
+    "Type": "Message;Link;Image",
     "Message": "Try look at these links for help",
-    "Link": "https://www.choicenotchance.org.nz/"
+    "Image": "https://cdn.glitch.com/00ecfa44-32b0-4a79-a2a1-06d87dc60204%2Ftest_image.jpg",
+    "Link": "Choice not Chance;https://www.choicenotchance.org.nz/"
   }
 ]
