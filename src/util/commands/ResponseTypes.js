@@ -3,7 +3,8 @@ const Types = {
   BUTTONS: 'Buttons',
   STORE: 'Store',
   RECALL: 'Recall',
-  IMAGE: 'Image'
+  IMAGE: 'Image',
+  LINK: 'Link'
 };
 
 module.exports = Types;

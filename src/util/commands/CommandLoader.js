@@ -88,10 +88,26 @@ class CommandLoader {
       );
 
       let sendable = true;
+      const adaptive = types.includes(TYPES.LINK || TYPES.IMAGE);
       const msg = new builder.Message(session);
+      let attachment = {
+        contentType: 'application/vnd.microsoft.card.adaptive',
+        content: {
+          type: 'AdaptiveCard',
+          body: []
+        }
+      };
+
       // Add message if response includes a message (text)
       if (types.includes(TYPES.MESSAGE)) {
-        msg.text(msgProto[TYPES.MESSAGE]);
+        if (adaptive) {
+          attachment.body.push({
+            type: 'TextBlock',
+            text: msgProto[TYPES.MESSAGE]
+          });
+        } else {
+          msg.text(msgProto[TYPES.MESSAGE]);
+        }
       }
 
       // Add buttons if response includes buttons
