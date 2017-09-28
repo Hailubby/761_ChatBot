@@ -40,22 +40,23 @@ class Bot {
 
     // Listen for messages from SPGeTTi application to send to users
     this.app.post('/appwebhook', (req, res) => {
-        try{
+        try {
           sendProactiveMessage.call(this, req);
-
-           //Send 'successfully sent' message to sender
+          //Send 'successfully sent' message to sender
           res.send('Successfully sent a message to Facebook user');
         } catch (e){
+          console.error('Proactive message send unsuccessful');
+          res.status(400);
           res.send(e.body);
         }
-        
-    }); 
+    });
 
     const server = this.app.listen(3000, () => {
       console.info(`Listening on port ${server.address().port}`);
     });
 
       this.bot = new builder.UniversalBot(this.connector, session => {
+        console.log(session);
       this.logger.log(session.message.user.id, session.message.text, 'receive');
 
       this.nlp.processMessage(session).then(intent => {
@@ -120,7 +121,7 @@ function sendProactiveMessage(req) {
 
   let userId = req.body.user_id;
   let messageContent = req.body.message;
-  
+
   let address = {
   channelId: 'facebook',
   user: {
