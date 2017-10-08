@@ -38,16 +38,18 @@ class GoogleSheetsLogger {
         values: [[label, text, new Date(Date.now()).toString()]]
       }
     };
-    this.sheets.spreadsheets.values.append(req, (err, response) => {
-      if (err) {
-        // need to be able make the sheet if the error message says that
-        // sheet does not exist.
-        // eslint-disable-next-line eqeqeq
-        if (err.code == 400) {
-          this.makeSheet(senderId);
-          this.log(senderId, text, label);
+    return new Promise((resolve, reject) => {
+      this.sheets.spreadsheets.values.append(req, (err, response) => {
+        if (err) {
+          // need to be able make the sheet if the error message says that
+          // sheet does not exist.
+          // eslint-disable-next-line eqeqeq
+          if (err.code == 400) {
+            reject(err);
+          }
+          resolve();
         }
-      }
+      });
     });
   }
 
@@ -78,8 +80,9 @@ class GoogleSheetsLogger {
    * Make an individual sheet in the workbook for a new user log.
    *
    * @param {string} senderId The id of the message sender
+   * @param {string} senderName Facebook username
    */
-  makeSheet(senderId) {
+  makeSheet(senderId, senderName) {
     let req = {
       spreadsheetId: config.GOOGLE_LOGGING_BOOK,
       auth: this.auth,
@@ -94,29 +97,28 @@ class GoogleSheetsLogger {
       }
     };
 
-    this.sheets.spreadsheets.batchUpdate(req, (err, response) => {
-      if (err) {
-        console.error('If this error says:',
-          '"Invalid requests[0].addSheet: Sheet already exists. Please enter another name."',
-          ' then ignore it\n',
-          err);
-        return;
-      } else {
-        this.addToToc(senderId, response.replies[0].addSheet.properties.sheetId);
-      }
-
+    return new Promise((resolve, reject) => {
+      this.sheets.spreadsheets.batchUpdate(req, (err, response) => {
+        if (err) {
+          reject(err);
+          // This happens, doesn't crash dough.
+        } else {
+          resolve(response.replies[0].addSheet.properties.sheetId);
+        }
+      });
     });
   }
+
+
   /**
-  * Add a link to the other sheets in the workbook to the ToC.
+  * Add a link to the other sheets in the workbook to the Table of contents.
   *
   * @param {string} senderId
   * @param {string} sheetGid
   */
-  addToToc(senderId, sheetGid) {
-
+  addToToc(senderId, senderName, sheetGid) {
     let sheetUrl = config.GOOGLE_TOC_BASE_URL + sheetGid;
-    this.append(config.GOGGLE_TOC_SHEETNAME, [senderId, sheetUrl]);
+    this.append(config.GOGGLE_TOC_SHEETNAME, [senderId, senderName, sheetUrl]);
   }
 }
 
