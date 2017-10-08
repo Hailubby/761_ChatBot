@@ -82,7 +82,6 @@ class Bot {
     if (!responded) {
       this.commands.every(command => {
         if (command.match(intent)) {
-          console.error('in');
           command.respond(session);
           this.userFollowups[session.message.user.id] = command.followup;
           return false;
