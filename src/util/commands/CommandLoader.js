@@ -109,7 +109,9 @@ class CommandLoader {
             size: 'large'
           });
         } else {
-          msg.text(msgProto[TYPES.MESSAGE]);
+          let text = msgProto[TYPES.MESSAGE].split(';');
+          let msgIndex = Math.floor(Math.random() * text.length);
+          msg.text(text[msgIndex]);
         }
       }
 
