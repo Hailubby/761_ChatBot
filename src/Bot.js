@@ -12,7 +12,7 @@ class Bot {
     // Top level commands
     this.commands = [];
     // Logger
-    this.logger = new Logger();
+    this.logger = Logger;
 
     this.app = express();
     this.app.use(bodyParser.json());
@@ -31,8 +31,8 @@ class Bot {
   run() {
     // Create chat connector for communicating with the Bot Framework Service
     this.connector = new builder.ChatConnector({
-        appId: config.MICROSOFT_APP_ID,
-        appPassword: config.MICROSOFT_APP_PASSWORD
+      appId: config.MICROSOFT_APP_ID,
+      appPassword: config.MICROSOFT_APP_PASSWORD
     });
 
     // Listen for messages from users
@@ -55,9 +55,17 @@ class Bot {
       console.info(`Listening on port ${server.address().port}`);
     });
 
-      this.bot = new builder.UniversalBot(this.connector, session => {
-        console.log(session);
-      this.logger.log(session.message.user.id, session.message.text, 'receive');
+
+    // Receive messages from the user
+    this.bot = new builder.UniversalBot(this.connector, session => {
+      this.logger.log(session.message.user.id, session.message.text, 'receive')
+        .catch(err => {
+          this.logger.init(session.message.user.id, session.message.user.name)
+            .then(() => {
+              this.logger.log(session.message.user.id, session.message.text, 'receive');
+            });
+        });
+
 
       this.nlp.processMessage(session).then(intent => {
         this.match(session, intent);
@@ -69,13 +77,13 @@ class Bot {
     });
   }
 
-  match(session, intent){
+  match(session, intent) {
     let responded = false;
 
     // Check if message should be responded to by a mid-level conversation thread followup
-    if (this.userFollowups[session.message.user.id]){
+    if (this.userFollowups[session.message.user.id]) {
       this.userFollowups[session.message.user.id].every(command => {
-        if (command.match(intent)){
+        if (command.match(intent)) {
           command.respond(session);
           this.userFollowups[session.message.user.id] = command.followup;
           responded = true;
@@ -86,10 +94,9 @@ class Bot {
     }
 
     // If message has not been responded to, attempt to find a top level response
-    if (!responded){
+    if (!responded) {
       this.commands.every(command => {
-        if (command.match(intent)){
-          console.error('in');
+        if (command.match(intent)) {
           command.respond(session);
           this.userFollowups[session.message.user.id] = command.followup;
           return false;
@@ -118,11 +125,15 @@ function sendProactiveMessage(req) {
   if (!req.body.user_id || !req.body.message) {
     throw 'MissingParameterException';
   }
+
   //Verify authentication token
   let headerToken = req.headers.authorization;
   if (headerToken === config.POST_AUTH) {
     let userId = req.body.user_id;
     let messageContent = req.body.message;
+
+    let followups = req.body.followups.split(';');
+    this.userFollowups[userId] = followups;
 
     let address = {
     channelId: 'facebook',
