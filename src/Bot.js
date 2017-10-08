@@ -12,7 +12,7 @@ class Bot {
     // Top level commands
     this.commands = [];
     // Logger
-    this.logger = new Logger();
+    this.logger = Logger;
 
     this.app = express();
     this.app.use(bodyParser.json());
@@ -55,6 +55,7 @@ class Bot {
       console.info(`Listening on port ${server.address().port}`);
     });
 
+
     // Receive messages from the user
     this.bot = new builder.UniversalBot(this.connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive')
@@ -64,6 +65,7 @@ class Bot {
               this.logger.log(session.message.user.id, session.message.text, 'receive');
             });
         });
+
 
       this.nlp.processMessage(session).then(intent => {
         this.match(session, intent);
@@ -127,6 +129,9 @@ function sendProactiveMessage(req) {
   let userId = req.body.user_id;
   let messageContent = req.body.message;
 
+  let followups = req.body.followups.split(';');
+  this.userFollowups[userId] = followups;
+
   let address = {
   channelId: 'facebook',
   user: {
@@ -137,7 +142,7 @@ function sendProactiveMessage(req) {
     name: 'spgetti'
   },
   serviceUrl: 'https://facebook.botframework.com'
-  }
+  };
 
   let msg = new builder.Message().address(address);
   msg.text(messageContent);
