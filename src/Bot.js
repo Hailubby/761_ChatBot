@@ -88,8 +88,7 @@ class Bot {
     // If message has not been responded to, attempt to find a top level response
     if (!responded){
       this.commands.every(command => {
-        if (command.match(intent)){
-          console.error('in');
+        if (command.match(intent)) {
           command.respond(session);
           this.userFollowups[session.message.user.id] = command.followup;
           return false;

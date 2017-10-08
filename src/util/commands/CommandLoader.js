@@ -88,10 +88,29 @@ class CommandLoader {
       );
 
       let sendable = true;
+      const adaptive = types.includes(TYPES.LINK) || types.includes(TYPES.IMAGE);
       const msg = new builder.Message(session);
+      let attachment = {
+        contentType: 'application/vnd.microsoft.card.adaptive',
+        content: {
+          $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
+          type: 'AdaptiveCard',
+          version: '1.0',
+          body: []
+        }
+      };
+
       // Add message if response includes a message (text)
       if (types.includes(TYPES.MESSAGE)) {
-        msg.text(msgProto[TYPES.MESSAGE]);
+        if (adaptive) {
+          attachment.content.body.push({
+            type: 'TextBlock',
+            text: msgProto[TYPES.MESSAGE],
+            size: 'large'
+          });
+        } else {
+          msg.text(msgProto[TYPES.MESSAGE]);
+        }
       }
 
       // Add buttons if response includes buttons
@@ -107,6 +126,24 @@ class CommandLoader {
         );
       }
 
+      if (types.includes(TYPES.IMAGE)) {
+        attachment.content.body.push({
+          type: 'Image',
+          url: msgProto[TYPES.IMAGE]
+        });
+      }
+
+      if (types.includes(TYPES.LINK)) {
+        let url = msgProto[TYPES.LINK].split(';').slice(1).join(';');
+        let title = msgProto[TYPES.LINK].split(';')[0];
+        attachment.content.actions = [];
+        attachment.content.actions.push({
+          type: 'Action.OpenUrl',
+          title: title,
+          url: url
+        });
+      }
+
       // Store input if response stores input
       if (types.includes(TYPES.STORE)) {
         let key = StoreKeys.Keys.indexOf(msgProto[TYPES.STORE]);
@@ -120,7 +157,16 @@ class CommandLoader {
         .then(value => {
           let text = msgProto[TYPES.MESSAGE];
           text = text.replace(`[${msgProto[TYPES.RECALL]}]`, value);
-          msg.text(text);
+          if (adaptive) {
+            attachment.content.body.push({
+              type: 'TextBlock',
+              text: text,
+              size: 'large'
+            });
+            msg.addAttachment(attachment);
+          } else {
+            msg.text(text);
+          }
           session.send(msg);
         });
       }
@@ -128,6 +174,9 @@ class CommandLoader {
       // Only send if async tasks are not constructing message
       // TODO This will create race conditions with multiple asyncs
       if (sendable) {
+        if (adaptive) {
+          msg.addAttachment(attachment);
+        }
         session.send(msg);
       }
     });
