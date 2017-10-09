@@ -1,11 +1,13 @@
 const GStore = require('./GoogleSheetsStore');
-
+const StoreKeys = require('./StoreKeys.json');
+const Logger = require('../logging/Logger');
 /**
  * A store that stores data.
  */
 class Store {
   constructor() {
     this.store = new GStore();
+    this.log = Logger;
   }
 
   /**

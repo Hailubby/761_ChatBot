@@ -12,7 +12,7 @@ class Bot {
     // Top level commands
     this.commands = [];
     // Logger
-    this.logger = new Logger();
+    this.logger = Logger;
 
     this.app = express();
     this.app.use(bodyParser.json());
@@ -46,6 +46,7 @@ class Bot {
     this.bot = new builder.UniversalBot(this.connector, session => {
       this.logger.log(session.message.user.id, session.message.text, 'receive')
         .catch(err => {
+          // Make a new logsheet for users if there is one that does not exist
           this.logger.init(session.message.user.id, session.message.user.name)
             .then(() => {
               this.logger.log(session.message.user.id, session.message.text, 'receive');

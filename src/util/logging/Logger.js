@@ -34,3 +34,5 @@ class Logger {
 }
 
 module.exports = Logger;
+let single = new Logger();
+module.exports = single;
