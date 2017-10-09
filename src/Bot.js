@@ -129,32 +129,39 @@ function sendProactiveMessage(req) {
     throw 'MissingParameterException';
   }
 
-  let userId = req.body.user_id;
-  let messageContent = req.body.message;
+  //Verify authentication token
+  let headerToken = req.headers.authorization;
+  if (headerToken === config.POST_AUTH) {
+    let userId = req.body.user_id;
+    let messageContent = req.body.message;
 
-  let followups = req.body.followups.split(';');
-  let followCommands = [];
-  for (let key of followups) {
-    followCommands.push(loader.getCommand(key, followUpJSON));
+    let followups = req.body.followups.split(';');
+    let followCommands = [];
+    for (let key of followups) {
+      followCommands.push(loader.getCommand(key, followUpJSON));
+    }
+    this.userFollowups[userId] = followCommands;
+
+    let address = {
+    channelId: 'facebook',
+    user: {
+      id: userId
+    },
+    bot: {
+      id: '513268699012224',
+      name: 'spgetti'
+    },
+    serviceUrl: 'https://facebook.botframework.com'
+    };
+
+    let msg = new builder.Message().address(address);
+    msg.text(messageContent);
+    msg.textLocale('en-US');
+    this.bot.send(msg);
+  } else {
+    throw 'AuthenticationException';
   }
-  this.userFollowups[userId] = followCommands;
 
-  let address = {
-  channelId: 'facebook',
-  user: {
-    id: userId
-  },
-  bot: {
-    id: '513268699012224',
-    name: 'spgetti'
-  },
-  serviceUrl: 'https://facebook.botframework.com'
-  };
-
-  let msg = new builder.Message().address(address);
-  msg.text(messageContent);
-  msg.textLocale('en-US');
-  this.bot.send(msg);
 }
 
 module.exports = Bot;

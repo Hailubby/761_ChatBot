@@ -15,6 +15,7 @@
 
   "MICROSOFT_APP_ID": "a8730359-4a1f-4ba7-8a75-e2274fb380ce",
   "MICROSOFT_APP_PASSWORD": "TUxF9x5ysqGYmchEC7Ne8LG",
-  "LUIS_RECOGNIZER" : "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a0a06c36-83fc-4320-b1c5-ced3a25fe27d?subscription-key=44bcee82f38d4c54aa7df60d3f5123a7&staging=true&verbose=true&timezoneOffset=0"
+  "LUIS_RECOGNIZER" : "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a0a06c36-83fc-4320-b1c5-ced3a25fe27d?subscription-key=44bcee82f38d4c54aa7df60d3f5123a7&staging=true&verbose=true&timezoneOffset=0",
 
+  "POST_AUTH": "65zGTEHvI9B4vnAVYnFXhB867th9FAiTFMEG9KHSImkjQoavcDWZSjWiyMEhGHDu"
 }
