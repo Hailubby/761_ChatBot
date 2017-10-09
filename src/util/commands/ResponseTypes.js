@@ -4,7 +4,8 @@ const Types = {
   STORE: 'Store',
   RECALL: 'Recall',
   IMAGE: 'Image',
-  LINK: 'Link'
+  LINK: 'Link',
+  TITLE: 'Title'
 };
 
 module.exports = Types;
