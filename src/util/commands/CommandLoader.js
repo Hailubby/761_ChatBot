@@ -186,4 +186,4 @@ class CommandLoader {
   }
 }
 
-module.exports = CommandLoader;
+module.exports = new CommandLoader();

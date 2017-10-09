@@ -4,6 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('../config.json');
 const NLP = require('./NLP.js');
+const followUpJSON = require('../resources/followup.json');
+const loader = require('./util/commands/CommandLoader');
 
 class Bot {
   constructor() {
@@ -46,6 +48,7 @@ class Bot {
           res.send('Successfully sent a message to Facebook user');
         } catch (e){
           console.error('Proactive message send unsuccessful');
+          console.error(e);
           res.status(400);
           res.send(e.body);
         }
@@ -130,7 +133,11 @@ function sendProactiveMessage(req) {
   let messageContent = req.body.message;
 
   let followups = req.body.followups.split(';');
-  this.userFollowups[userId] = followups;
+  let followCommands = [];
+  for (let key of followups) {
+    followCommands.push(loader.getCommand(key, followUpJSON));
+  }
+  this.userFollowups[userId] = followCommands;
 
   let address = {
   channelId: 'facebook',
