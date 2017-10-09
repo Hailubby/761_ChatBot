@@ -79,7 +79,7 @@ class CommandLoader {
     /* eslint-disable max-statements */
     return (session => {
       const Logger = require('./../logging/Logger');
-      const logger = new Logger();
+      const logger = Logger;
 
       logger.log(
         session.message.user.id,

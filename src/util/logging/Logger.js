@@ -20,7 +20,7 @@ class Logger {
   }
 
   /**
-   * Make the log for a user.
+   * Make the log for a user if the user does not already exist.
    *
    * @param {string} senderId
    * @param {string} senderName
@@ -28,9 +28,26 @@ class Logger {
   init(senderId, senderName) {
     return this.logger.makeSheet(senderId, senderName)
       .then(sheetId => {
+        // Add a new row to the table of contents representing this user
         this.logger.addToToc(senderId, senderName, sheetId);
+        // Increment the count of the total number of users.
+        this.logger.overviewAddUser();
       });
   }
-}
 
-module.exports = Logger;
+  /**
+   * Update the global goal count, has logic to check that the user has not
+   * already set a goal.
+   *
+   * @param {string} userID
+   */
+  overviewAddGoal(userID) {
+    return new Promise((resolve, reject) => {
+      this.logger.overviewAddGoal(userID);
+      resolve();
+    });
+  }
+
+}
+let single = new Logger();
+module.exports = single;
