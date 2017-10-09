@@ -24,7 +24,11 @@ class GoogleSheetsLogger {
           if (err) {
             reject(err);
           }
-          resolve(res.values[0][0]);
+          if (res.values) {
+            resolve(res.values[0][0]);
+          } else {
+            resolve();
+          }
         });
       });
       // Write to the sheet
@@ -160,10 +164,17 @@ class GoogleSheetsLogger {
 
     //update no. of users
     this.overviewQ.push(readReq, val => {
-      val++;
+      // Check if the value is actually assigned if it's not then it becomes one
+      // else increment the value.
+      if (val) {
+        val++;
+      } else {
+        val = 1;
+      }
+
       writeReq.resource.values = [[val]];
       this.sheets.spreadsheets.values.update(writeReq,
-        (err, res) => {
+        err => {
           if (err) {
             throw err;
           }
@@ -173,17 +184,19 @@ class GoogleSheetsLogger {
 
   /**
    * Update the total summation of all the goals of all the users.
+   *
+   * Takes in the users ID to check if they have a goal set.
+   * @param {string} id
    */
   overviewAddGoal(id) {
-    let GSS = require('../storage/GoogleSheetsStore');
-    let range = 'Overview!B2:B2',
-      uReadReq = {
-        auth: this.auth,
-        spreadsheetId: config.GOOGLE_LOGGING_BOOK,
-        // Using the Enum made in StoreKey we only grab the value of Goals.
-        range: `${id}!F1:F1`
-      },
-      readReq = {
+    let range = 'Overview!B2:B2';
+    let userReadRequest = {
+      auth: this.auth,
+      spreadsheetId: config.GOOGLE_LOGGING_BOOK,
+      // Using the Enum made in StoreKey we only grab the value of Goals.
+      range: `${id}!F1:F1`
+    },
+      overviewReadRequest = {
         auth: this.auth,
         spreadsheetId: config.GOOGLE_LOGGING_BOOK,
         range: range
@@ -199,19 +212,26 @@ class GoogleSheetsLogger {
         }
       };
     // Read a users goal and cheque if a user has a goal set.
-    this.overviewQ.push(uReadReq,
+    this.overviewQ.push(userReadRequest,
       val => {
-        if (val === null | undefined | '') {
-          // If the user has no goal before hand that means we need to
-          // incriment the number of goals.
-          this.sheets.spreadsheets.values.get(readReq, (err, res) => {
+        // If the user has no goal before hand that means we need to
+        // increment the number of goals.
+        if (!val) {
+          this.sheets.spreadsheets.values.get(overviewReadRequest, (err, res) => {
             if (err) {
               throw err;
             }
-            let goalNo = res.values[0][0];
-            goalNo++;
-            this.sheets.spreadsheets.values.update(req,
-              (err, res) => {
+            let goalNo;
+            if (res.values) {
+              goalNo = res.values[0][0];
+              goalNo++;
+            } else {
+              goalNo = 1;
+            }
+            //update values on overview page
+            writeReq.resource.values = [[goalNo]];
+            this.sheets.spreadsheets.values.update(writeReq,
+              err => {
                 if (err) {
                   throw err;
                 }
@@ -219,7 +239,7 @@ class GoogleSheetsLogger {
           });
         }
       });
-    //update
+
   }
 }
 

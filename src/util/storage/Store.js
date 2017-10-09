@@ -18,8 +18,14 @@ class Store {
    * @param {string} key
    * @param {string} value
    */
-  write(id, key, value){
-   return this.store.write(id, key, value);
+  write(id, key, value) {
+    if (key === 1) {
+      this.log.overviewAddGoal(id).then(() => {
+        return this.store.write(id, key, value);
+      });
+    } else {
+      return this.store.write(id, key, value);
+    }
   }
 
   /**
