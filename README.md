@@ -9,7 +9,7 @@
     - [Glitch Setup](#glitch-setup)
     - [Prototype Execution](#prototype-execution)
     - [Adding Commands](#adding-commands)
-    - [Logging](#Logging)
+    - [Logging](#logging)
 
 <!-- /TOC -->
 
