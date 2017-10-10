@@ -26,7 +26,7 @@ class ExcelConverter {
 
   /**
    * Converts sheet specified from Modules to json
-   * 
+   *
    * @param {string} module key of module to load, should be contained in Modules
    */
   convert(module) {

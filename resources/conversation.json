@@ -1,1 +1,42 @@
-[{"ID":"0","Key":"^(?=.*\\bgoals?\\b.*).*$","Bot Response":"Need help setting some goals?","Response Type":"String","Follow Ups":"0;1"}]
+[
+  {
+    "ID": "0",
+    "Key": "goals",
+    "Type": "Message;Buttons",
+    "Message": "Need help setting some goals?;Would you like to set some goals?; Do you want to set some goals?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "0;1"
+  },
+  {
+    "ID": "1",
+    "Key": "problems",
+    "Type": "Message;Buttons",
+    "Message": "Do you think you have a problem?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "8;9"
+  },
+  {
+    "ID": "2",
+    "Key": "stressed",
+    "Type": "Message;Buttons",
+    "Message": "Do you need some ideas to help you relax?",
+    "Buttons": "Yes;No",
+    "Follow Ups": "19;20"
+  },
+  {
+    "ID": "3",
+    "Key": "recall goals",
+    "Type": "Message;Recall",
+    "Message": "Your goal was: [Goals]",
+    "Recall": "Goals"
+  },
+  {
+    "ID": "4",
+    "Key": "link",
+    "Type": "Message;Link;Image;Title",
+    "Message": "Try look at this link for more help.",
+    "Image": "https://cdn.glitch.com/00ecfa44-32b0-4a79-a2a1-06d87dc60204%2Ftest_image.jpg",
+    "Link": "Choice not Chance;https://www.choicenotchance.org.nz/;Youtube;https://www.youtube.com/",
+    "Title": "Need more help?"
+  }
+]
