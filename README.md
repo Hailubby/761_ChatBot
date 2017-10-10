@@ -6,6 +6,10 @@
     - [Description](#description)
     - [Setup](#setup)
     - [Editing environment](#editing-environment)
+    - [Glitch Setup](#glitch-setup)
+    - [Prototype Execution](#prototype-execution)
+    - [Adding Commands](#adding-commands)
+    - [Logging](#Logging)
 
 <!-- /TOC -->
 
