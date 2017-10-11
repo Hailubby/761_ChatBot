@@ -76,7 +76,7 @@ class Bot {
         });
 
 
-      this.nlp.processMessage(session).then(intent => {
+      this.nlp.processMessage(session.message.text).then(intent => {
         this.match(session, intent);
       }, error => {
         console.error(error);
