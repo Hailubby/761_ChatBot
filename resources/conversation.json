@@ -3,7 +3,7 @@
     "ID": "0",
     "Key": "set goals",
     "Type": "Message;Buttons",
-    "Message": "Need help setting some goals?;Would you like to set some goals?; Do you want to set some goals?",
+    "Message": "Need help setting some goals?;Would you like to set some goals?; Do you want to set some goals?;Something something goals?",
     "Buttons": "Yes;No",
     "Follow Ups": "0;1"
   },
