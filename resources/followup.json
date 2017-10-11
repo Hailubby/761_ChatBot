@@ -59,7 +59,7 @@
     "Type": "Message;Buttons",
     "Message": "You are not alone. Do you want to talk to someone?",
     "Buttons": "Yes;No",
-    "Follow Ups": "10;11"
+    "Follow Ups": "10;18"
   },
   {
     "ID": "9",
@@ -72,8 +72,10 @@
   {
     "ID": "10",
     "Key": "yes",
-    "Type": "Message",
-    "Message": "You can phone a friend, call the Gambling Helpline 0800 654 655 or text 8006 for more information"
+    "Type": "Message;Image;Title",
+    "Message": "Call the Gambling Helpline 0800 654 655 or text 8006 for more info",
+    "Image": "http://www.wrh-global-americas.com/data/docs/en/5082/Service-Titelbild-1.jpg?variant=3439&v=1.0",
+    "Title": "Call for help"
   },
   {
     "ID": "11",
@@ -83,6 +85,7 @@
   },
   {
     "ID": "12",
+    "Key": "yes;no",
     "Type": "Message;Buttons",
     "Message": "Do you gamble using money meant for other things?",
     "Buttons": "Yes;No",
@@ -90,6 +93,7 @@
   },
   {
     "ID": "13",
+    "Key": "yes;no",
     "Type": "Message;Buttons",
     "Message": "Do you lie about your gambling to people you care about?",
     "Buttons": "Yes;No",
@@ -97,6 +101,7 @@
   },
   {
     "ID": "14",
+    "Key": "yes;no",
     "Type": "Message;Buttons",
     "Message": "Do you get angry or defensive when people ask about your gambling?",
     "Buttons": "Yes;No",
@@ -104,6 +109,7 @@
   },
   {
     "ID": "15",
+    "Key": "yes;no",
     "Type": "Message;Buttons",
     "Message": "Do you borrow money just so you can gamble?",
     "Buttons": "Yes;No",
@@ -111,6 +117,7 @@
   },
   {
     "ID": "16",
+    "Key": "yes;no",
     "Type": "Message;Buttons",
     "Message": "Did you answer yes to most of these?",
     "Buttons": "Yes;No",
@@ -122,13 +129,16 @@
     "Type": "Message;Buttons",
     "Message": "It looks like gambling is hurting you and maybe those you care about. Do you want to talk to someone about it?",
     "Buttons": "Yes;No",
-    "Follow Ups": "10;11"
+    "Follow Ups": "10;18"
   },
   {
     "ID": "18",
     "Key": "no",
-    "Type": "Message",
-    "Message": "Okay that's great! If you want more information, you can go to choicenotchance.org.nz"
+    "Type": "Title;Message;Image;Link",
+    "Message": "If you want more information, you can go to choicenotchance",
+    "Image": "https://www.hetaumata.co.nz/sites/default/files/pictures/CnC%20FINAL%20LOGO_Strap%20CMYK_ver_no%20grad.jpg",
+    "Link": "Choice not Chance;https://www.choicenotchance.org.nz/",
+    "Title": "Want more?"
   },
   {
     "ID": "19",
@@ -147,13 +157,85 @@
   {
     "ID": "21",
     "Key": "indoors",
-    "Type": "Message",
-    "Message": "Why don't you invite your friends over for dinner? You find some recipes at myfamily.kiwi/foods"
+    "Type": "Message;Link;Title;Image",
+    "Message": "Why don't you invite your friends over for dinner? Use some new recipes!",
+    "Image": "http://images.contentful.com/6fpp5r5onj5r/3gXKQiIFckYc6oSY2W6eaG/0f0ea7f77efa02c58ece0d5b39f84a3b/Thai_chicken_salad.jpg?w=485",
+    "Link": "myfamily.kiwi/foods"
   },
   {
     "ID": "22",
     "Key": "outdoors",
     "Type": "Message",
     "Message": "You can go for a walk, visit a museum or gallery with your friends or family. Going to a nearby park is also a fun thing to do!"
+  },
+  {
+    "ID": "23",
+    "Type": "Message;Image;Title",
+    "Message": "Here to help with your problemos!",
+    "Image": "https://d2gg9evh47fn9z.cloudfront.net/thumb_COLOURBOX6978004.jpg",
+    "Title": "Hi, I'm Spgetti Bot!",
+    "Follow Ups": "24"
+  },
+  {
+    "ID": "24",
+    "Type": "Message",
+    "Message": "I'm a super multi-functional bot to help with your gambling addictions!  I can send you messages to see how you're doing, give you helpful links, and I'm super smart so I can even hold a real conversation!",
+    "Follow Ups": "25"
+  },
+  {
+    "ID": "25",
+    "Type": "Message",
+    "Message": "We're holding a conversation now silly! ;P",
+    "Follow Ups": "26"
+  },
+  {
+    "ID": "26",
+    "Type": "Message",
+    "Message": "I can remember what we've talked about so I can remind you later too!",
+    "Follow Ups": "27"
+  },
+  {
+    "ID": "27",
+    "Type": "Message;Store",
+    "Message": "Sure!  I'll remember that foreveeeeer.  Y'know, I can send fancy messages with images a links too!",
+    "Store": "Goals",
+    "Follow Ups": "28"
+  },
+  {
+    "ID": "28",
+    "Type": "Title;Message;Image;Link",
+    "Message": "This is one of my favs!",
+    "Image": "https://www.hetaumata.co.nz/sites/default/files/pictures/CnC%20FINAL%20LOGO_Strap%20CMYK_ver_no%20grad.jpg",
+    "Link": "Choice Not Chance;choicenotchance.org.nz",
+    "Title": "Want more?",
+    "Follow Ups": "29"
+  },
+  {
+    "ID": "29",
+    "Type": "Message;Buttons",
+    "Message": "I sure do!  But aren’t you forgetting something?",
+    "Buttons": "Click me!;Or me!",
+    "Follow Ups": "30"
+  },
+  {
+    "ID": "30",
+    "Type": "Message;Recall",
+    "Message": "You asked me to remember: [Goals].  You're welcome for the reminder!",
+    "Recall": "Goals",
+    "Follow Ups": "31"
+  },
+  {
+    "ID": "31",
+    "Type": "Message",
+    "Message": "I think that's all.  But I can be easily extended by spreadsheets whenever you want!",
+    "Follow Ups": "32"
+  },
+  {
+    "ID": "32",
+    "Type": "Message;Image;Title;Link",
+    "Message": "See ya!",
+    "Image": "https://cdn.glitch.com/00ecfa44-32b0-4a79-a2a1-06d87dc60204%2Ftest_image.jpg",
+    "Link": "Goodbye;https://youtu.be/SW-BU6keEUw?t=4s",
+    "Title": "That's all for now!"
   }
 ]

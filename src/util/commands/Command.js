@@ -11,7 +11,11 @@ class Command {
    */
   constructor(key, respond = session => {}, followup = []){
     // name of key
-    this.key = new RegExp(key, 'i');
+    if (key) {
+      this.key = new RegExp(`^${key}$`, 'i');
+    } else {
+      this.key = new RegExp('', 'i');
+    }
     // Response this convo gives
     this.respond = respond;
     // follow up convos

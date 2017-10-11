@@ -46,7 +46,10 @@ class CommandLoader {
    */
   getCommand(id, json) {
     const obj = json[id];
-    const key = obj[PROPERTIES.KEY];
+    let key = obj[PROPERTIES.KEY];
+    if (key) {
+      key = key.replace(';', '|');
+    }
     const respond = this.makeResponse(obj);
 
     let followUpsIDArr = obj[PROPERTIES.FOLLOWUPS];
