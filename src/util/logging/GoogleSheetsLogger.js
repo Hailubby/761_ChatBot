@@ -144,7 +144,8 @@ class GoogleSheetsLogger {
   */
   addToToc(senderId, senderName, sheetGid) {
     let sheetUrl = config.GOOGLE_TOC_BASE_URL + sheetGid;
-    this.append(config.GOGGLE_TOC_SHEETNAME, [senderId, senderName, sheetUrl]);
+    this.append(config.GOGGLE_TOC_SHEETNAME,
+      [senderId, senderName, sheetUrl, new Date(Date.now()).toString()]);
   }
 
   /**
