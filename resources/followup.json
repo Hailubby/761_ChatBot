@@ -203,11 +203,11 @@
   },
   {
     "ID": "28",
-    "Type": "Title;Message;Image;Link",
+    "Type": "Message;Link;Image;Title",
     "Message": "This is one of my favs!",
     "Image": "https://www.hetaumata.co.nz/sites/default/files/pictures/CnC%20FINAL%20LOGO_Strap%20CMYK_ver_no%20grad.jpg",
-    "Link": "Choice Not Chance;choicenotchance.org.nz",
-    "Title": "Want more?",
+    "Link": "Choice not Chance;https://www.choicenotchance.org.nz/",
+    "Title": "Need more help?",
     "Follow Ups": "29"
   },
   {
