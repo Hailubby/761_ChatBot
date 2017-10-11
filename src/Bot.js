@@ -153,6 +153,7 @@ function sendProactiveMessage(req) {
   if (headerToken === config.POST_AUTH) {
     let userId = req.body.user_id;
     let messageContent = req.body.message;
+    this.logger.log(userId, messageContent, 'proactive');
 
     //These followups received must already exist in spreadsheet/json form
     let followups = req.body.followups.split(';');
