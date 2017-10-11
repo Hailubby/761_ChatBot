@@ -43,7 +43,7 @@ class Bot {
     // Listen for messages from SPGeTTi application to send to users
     this.app.post('/appwebhook', (req, res) => {
       try {
-        sendProactiveMessage(req);
+        sendProactiveMessage.call(this, req);
         //Send 'successfully sent' message to sender
         res.send('Successfully sent a message to Facebook user');
       } catch (e) {
