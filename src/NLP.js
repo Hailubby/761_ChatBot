@@ -29,11 +29,12 @@ class NLP {
         });
     });
   }
+  /**
+   * Takes in a new intent name and creates the intent for the LUIS AI.
+   */
   loadIntent(intentName) {
 
     let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/versions/0.1/intents';
-
-    console.log(requestURL);
 
     return new Promise((resolve, reject) => {
       request.post({
@@ -45,7 +46,6 @@ class NLP {
       },
         (err, res, body) => {
           if (res.statusCode == 201) {
-            console.log('Response: ' + res.body);
             resolve(body);
           } else {
             reject(res.statusMessage);
@@ -55,17 +55,15 @@ class NLP {
   }
 
   /**
-   *
+   * Takes in an array of utterances to train an intent.
    * @param {string} intentName
    * @param {string[]} utterance
    */
   loadUtterance(intentName, utterance) {
     let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/versions/0.1/examples';
 
-    console.log(requestURL);
-
     return new Promise((resolve, reject) => {
-      let utteranceArray = []
+      let utteranceArray = [];
       utterance.forEach((e, i) => {
         utteranceArray.push({
           'intentName': intentName,
@@ -82,20 +80,19 @@ class NLP {
       },
         (err, res, body) => {
           if (res.statusCode == 201) {
-            console.log('Response: ' + res.body);
             resolve(body);
           } else {
-            console.log(utteranceArray);
             reject(res.statusMessage);
           }
         });
     });
   }
 
+/**
+ * Exposed method to programmatically train the LUIS AI.
+ */
   train() {
     let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/versions/0.1/train';
-
-    console.log(requestURL);
 
     request.post({
       url: requestURL,
@@ -105,13 +102,14 @@ class NLP {
     },
       (err, res, body) => {
         if (res.statusCode == 202) {
-          console.log('Response: ' + res.body);
         } else {
-          console.log(Error(err));
+          console.err(Error(err));
         }
       });
   }
-
+/**
+ * Exposed method to programatically publish the newly trained LUIS AI. Currently set to publish as Staging.
+ */
   publish() {
     let requestURL = 'https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/' + config.LUIS_APP_ID + '/publish';
 
@@ -128,9 +126,9 @@ class NLP {
     },
       (err, res, body) => {
         if (res.statusCode == 201) {
-          console.log('Response: ' + res.body)
+          console.info('Successfully published: ' + res.statusCode);
         } else {
-          console.log(Error(err));
+          console.err(Error(err));
         }
       });
   }

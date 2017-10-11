@@ -2,6 +2,8 @@ const GLogger = require('./GoogleSheetsLogger');
 
 /**
  * General purpose logger.
+ *
+ * Uses the singleton design pattern so when imported do not instansiate just use immediately.
  */
 class Logger {
   constructor() {

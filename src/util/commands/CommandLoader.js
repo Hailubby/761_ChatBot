@@ -127,11 +127,13 @@ class CommandLoader {
         }
       }
 
+      // Add images if response includes an image
       if (types.includes(TYPES.IMAGE)) {
         let image = builder.CardImage.create(session, msgProto[TYPES.IMAGE]);
         card.images([image]);
       }
 
+      // Add links if response includes a link
       if (types.includes(TYPES.LINK)) {
         let parts = msgProto[TYPES.LINK].split(';');
         let links = [];
@@ -141,6 +143,7 @@ class CommandLoader {
         card.buttons(links);
       }
 
+      // Add a main title if response includes a title
       if (types.includes(TYPES.TITLE)) {
         card.title(msgProto[TYPES.TITLE]);
       }
@@ -151,6 +154,7 @@ class CommandLoader {
         this.store.write(session.message.user.id, key, session.message.text);
       }
 
+      // Retrieve previous user information if required
       if (types.includes(TYPES.RECALL)) {
         sendable = false;
         let key = StoreKeys.Keys.indexOf(msgProto[TYPES.RECALL]);
@@ -169,7 +173,6 @@ class CommandLoader {
       }
 
       // Only send if async tasks are not constructing message
-      // TODO This will create race conditions with multiple asyncs
       if (sendable) {
         if (makeCard) {
           msg.addAttachment(card);

@@ -7,6 +7,11 @@ const NLP = require('./NLP.js');
 const followUpJSON = require('../resources/followup.json');
 const loader = require('./util/commands/CommandLoader');
 
+/**
+ * Bot uses microsofts bot framework to communicate with different web endpoints as well
+ * as listening for post requests for miscellaneous requests, such as location and
+ * proactive messages.
+ */
 class Bot {
   constructor() {
     // Conversations mapped to users
@@ -81,11 +86,20 @@ class Bot {
     });
   }
 
+  /**
+   *
+   * From a session match the message to a command using the NLP engine.
+   *
+   * @param {*} session
+   * @param {*} intent
+   */
   match(session, intent) {
     let responded = false;
 
     // Check if message should be responded to by a mid-level conversation thread followup
     if (this.userFollowups[session.message.user.id]) {
+      // Check every followup and match with the commands, if the comman matches then break
+      // otherwise keep going.
       this.userFollowups[session.message.user.id].every(command => {
         if (command.match(intent)) {
           command.respond(session);
@@ -124,8 +138,10 @@ module.exports = Bot;
 
 /**
  * Send a message that will be sent to a specific user, as specified by their Facebook ID (user_id)
- * @param {*} req  The HTTP request containing Facebook user ID to send message to (in user_id) and message content (in message)
+ * @param {*} req  The HTTP request containing Facebook user ID to send message to (in user_id)
+ * and message content (in message).
  */
+// eslint-disable-next-line
 function sendProactiveMessage(req) {
 
   if (!req.body.user_id || !req.body.message) {
