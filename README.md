@@ -6,6 +6,10 @@
     - [Description](#description)
     - [Setup](#setup)
     - [Editing environment](#editing-environment)
+    - [Glitch Setup](#glitch-setup)
+    - [Prototype Execution](#prototype-execution)
+    - [Adding Commands](#adding-commands)
+    - [Logging](#logging)
 
 <!-- /TOC -->
 
@@ -55,3 +59,8 @@ Required:
   - Bot Response: what the bot will send back to the user
   - Response Type: String
   - Follow Ups: semicolon seperated id numbers of followups from Follow_Up_Messages
+  
+## Logging
+Messages sent to and from the bot are logged on a google sheet [here](https://docs.google.com/spreadsheets/d/1ZvkpfeUgNaZjo5vhcATjtyiMtum0TF5hPHhfI0z6iTE/edit?usp=sharing)
+It contains a table of contents of each user and their respective ID as well as an overview page containing specific information that Gayl requested (user and goal count).
+
