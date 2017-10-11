@@ -6,7 +6,7 @@ const async = require('async');
 /**
  * A logger that logs to a google sheet workbook.
  *
- * Workbook belongs to spgettibot goolge account.
+ * Workbook belongs to _spgettibot_ Google account.
  */
 class GoogleSheetsLogger {
   constructor() {
@@ -17,6 +17,9 @@ class GoogleSheetsLogger {
     this.googleAuth = new GoogleAuth();
     this.auth = new this.googleAuth.OAuth2(this.clientId, this.clientSecret, this.redirectUrl);
     this.auth.credentials = config.GOOGLE_SHEET_AUTH;
+
+    // Asynchronous queue used here because all cells are tallies and we don't want race conditions
+    // when modifying a cell.
     this.overviewQ = async.queue((task, callback) => {
       // get google sheet request then read current value
       let sheetCall = new Promise((resolve, reject) => {
@@ -33,8 +36,10 @@ class GoogleSheetsLogger {
       });
       // Write to the sheet
       sheetCall.then(val => {
+        // Perform specific logic dictated by this callback.
         callback.call(this, val);
       });
+      // We don't even want more than 1 think executing at a time.
     }, 1);
   }
 
@@ -75,6 +80,8 @@ class GoogleSheetsLogger {
 
   /**
    * Generic append method.
+   *
+   * Appends to the end of an existing sheet.
    *
    * @param {string} sheetId
    * @param {string[]} values
